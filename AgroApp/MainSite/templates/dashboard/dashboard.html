@@ -1,0 +1,44 @@
+{% extends "site.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    <a href="{% url 'product' %}" class="dashboard-link">Section 1</a>
+    <a href="{% url 'city' %}" class="dashboard-link">Section 2</a>
+    <a href="{% url 'sales' %}" class="dashboard-link">Section 3</a>
+    <a href="{% url 'weather' %}" class="dashboard-link">Section 4</a>
+    <a href="{% url 'notification' %}" class="dashboard-link">Section 5</a>
+</div>
+
+<a href="{% url 'profile' %}" class="back-button">Back to Profile</a>
+
+<style>
+    .dashboard-link {
+        display: block;
+        width: 200px;
+        padding: 20px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+    .dashboard-link:hover {
+        background-color: #0056b3;
+    }
+    .back-button {
+        display: block;
+        margin-top: 20px;
+        color: #000;
+        font-size: 16px;
+        text-decoration: none;
+    }
+    .back-button:hover {
+        text-decoration: underline;
+    }
+</style>
+
+{% endblock %}

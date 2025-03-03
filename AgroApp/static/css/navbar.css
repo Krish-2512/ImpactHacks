@@ -1,0 +1,46 @@
+   
+   
+   
+   /* Custom Navbar Styling */
+   .navbar-custom {
+    background-color: #343a40; /* Dark background */
+    padding: 10px 20px;
+    margin-bottom:200px;
+}
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f8f9fa !important;
+}
+.nav-link {
+    color: #f8f9fa !important;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+.nav-link:hover {
+    color: #ffc107 !important; /* Yellow hover effect */
+}
+.search-box {
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 200px;
+}
+.btn-custom {
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 1rem;
+}
+.auth{
+    margin-top: 100px;
+}
+.reg-auth{
+    margin-top:10%;
+}
+.profile-info{
+    margin-top:80px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+
+}

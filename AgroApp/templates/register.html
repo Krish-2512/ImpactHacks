@@ -1,0 +1,22 @@
+{% extends "top.html"%}
+
+{%block content%}
+<div class="reg-auth">
+    <h2>Register </h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }} 
+
+    {% if form.errors %}
+        <ul class="error-list" style="color: red;">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li class="error-message" style="color: red;">{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+    <button type="submit">Register</button>
+
+{%endblock%}

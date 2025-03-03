@@ -1,0 +1,39 @@
+{% extends "site.html" %}
+
+{% block content %}
+
+<div class="profile-info">
+    <div class="dash-txt">
+    <h2>Welcome, {{ request.user.username }}!</h2>
+    <p><strong>Username:</strong> {{ request.user.username }}</p>
+<p><strong>Email:</strong> {{ request.user.email }}</p>
+<p><strong>Contact Number:</strong> {{ request.user.phone }}</p>
+<p><strong>phone:</strong> {{ request.user.phone }}</p>
+<p><strong>location:</strong> {{ request.user.location }}</p>
+</div>
+<div class="dash-btn">
+    <a href="{% url 'dashboard' %}" class="dashboard-button">Go to Dashboard</a>
+</div>
+
+</div>
+<style>
+    .dashboard-button {
+        display: block;
+        width: 250px;
+        padding: 15px;
+        background-color: #28a745;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+    .dashboard-button:hover {
+        background-color: #218838;
+    }
+    
+</style>
+
+{% endblock %}
