@@ -1,0 +1,42 @@
+{% extends 'site.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Registered Farmers</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>farmers</th>
+                <th>email</th>
+                <th>Phone</th>
+                <th>View Products</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for farmer in farmers %}
+            <tr>
+                <td>{{ farmer.id }}</td>
+                <td>
+                    <a href="{% url 'farmer_products' farmer.id %}">
+                        {{ farmer.username }}
+                    </a>
+                </td>
+                <td>{{ farmer.email }}</td>
+                <td>{{ farmer.phone }}</td>
+                <td>
+                    <a href="{% url 'farmer_products' farmer.id %}" class="btn btn-primary">
+                        View Products
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No farmers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

@@ -1,22 +1,112 @@
-{% extends "top.html"%}
+{% extends "top.html" %}
 
-{%block content%}
-<div class="reg-auth">
-    <h2>Register </h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }} 
+{% block content %}
+<div class="register-container">
+    <div class="register-box">
+        <!-- Image on Top -->
+        <div class="text-center">
+            <img src="https://via.placeholder.com/150" alt="Register Image" class="register-img">
+        </div>
 
-    {% if form.errors %}
-        <ul class="error-list" style="color: red;">
-            {% for field, errors in form.errors.items %}
-                {% for error in errors %}
-                    <li class="error-message" style="color: red;">{{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+        <h2 class="text-center">Register</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Django Form Styling -->
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Error Messages -->
+            {% if form.errors %}
+            <div class="error-box">
+                <ul class="error-list">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li class="error-message">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+    </div>
 </div>
-    <button type="submit">Register</button>
 
-{%endblock%}
+
+<style>
+    /* Center the Register Box */
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      
+        background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient Background */
+      
+    }
+
+    .register-box {
+        background: white;
+        padding: 50px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+      width:30vw;
+      margin-bottom: 10vh;
+      margin-top: 10vh;
+        text-align: center;
+
+   
+    }
+
+    /* Image Styling */
+    .register-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+    }
+
+    /* Form Fields */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Error Messages */
+    .error-box {
+        background: #ffdddd;
+        padding: 10px;
+        border-left: 5px solid red;
+        margin-bottom: 15px;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+
+    /* Button */
+    .btn-primary {
+        background: #2575fc;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background: #6a11cb;
+    }
+</style>
+
+{% endblock %}

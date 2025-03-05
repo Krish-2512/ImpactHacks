@@ -1,0 +1,31 @@
+{% extends 'site.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Transaction History</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity Sold</th>
+                <th>Total Cost</th>
+                <th>Sold At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.product.name }}</td>
+                <td>{{ sale.quantity_sold }}</td>
+                <td>${{ sale.total_cost }}</td>
+                <td>{{ sale.sold_at|date:"Y-m-d H:i:s" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No transactions found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

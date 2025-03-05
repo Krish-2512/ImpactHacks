@@ -5,7 +5,7 @@
    .navbar-custom {
     background-color: #343a40; /* Dark background */
     padding: 10px 20px;
-    margin-bottom:200px;
+
 }
 .navbar-brand {
     font-size: 1.5rem;
@@ -43,4 +43,20 @@
    flex-direction: column;
    justify-content: center;
 
+}
+
+.register-btn {
+    background-color: #ffc107; 
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #ff9800; 
+    color: white;
+    text-decoration: none;
 }

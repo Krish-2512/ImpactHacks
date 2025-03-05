@@ -1,6 +1,22 @@
 {% extends "site.html" %}
 
-{% block content %}
-<h2>cntents</h2>
 
+{% block content %}
+    <h2>Notifications</h2>
+
+    {% if notifications %}
+        <ul>
+            {% for notification in notifications %}
+                <li>
+                    {{ notification.message }} - <small>{{ notification.timestamp }}</small>
+                    <form method="POST" action="{% url 'delete_notification' notification.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No new notifications.</p>
+    {% endif %}
 {% endblock %}

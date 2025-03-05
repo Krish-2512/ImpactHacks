@@ -1,6 +1,90 @@
 {% extends "site.html" %}
 
 {% block content %}
-<h2>cntents</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Sales Page</h2>
 
+    <div id="sales-section">
+        {% if products %}
+        <table class="table" id="sales-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Available Quantity</th>
+                    <!-- <th>Buy Quantity</th>
+                    <th>Total Cost</th>
+                    <th>Actions</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr id="sales-row-{{ product.id }}">
+                    <td class="name">{{ product.name }}</td>
+                    <td class="price">${{ product.price }}</td>
+                    <td class="available-quantity">{{ product.quantity }}</td>
+                    <!-- <td>
+                        <input type="number" class="form-control quantity-input" data-id="{{ product.id }}" min="1" max="{{ product.quantity }}" value="1">
+                    </td>
+                    <td class="total-cost">$0.00</td>
+                    <td>
+                        <button class="btn btn-success buy-btn" data-id="{{ product.id }}">Buy</button>
+                    </td> -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No products available for sale.</p>
+        {% endif %}
+    </div>
+
+    <!-- JavaScript for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Update total cost dynamically
+            $(".quantity-input").on("input", function () {
+                let row = $(this).closest("tr");
+                let price = parseFloat(row.find(".price").text().replace("$", ""));
+                let quantity = parseInt($(this).val());
+                let totalCost = (price * quantity).toFixed(2);
+                row.find(".total-cost").text(`$${totalCost}`);
+            });
+
+            // Handle buy action
+            $(".buy-btn").click(function () {
+                let row = $(this).closest("tr");
+                let productId = $(this).data("id");
+                let quantity = row.find(".quantity-input").val();
+
+                if (quantity < 1) {
+                    alert("Please enter a valid quantity.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href,
+                    data: {
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                        "product_id": productId,
+                        "quantity": quantity
+                    },
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
+                    success: function (response) {
+                        if (response.success) {
+                            row.find(".available-quantity").text(response.remaining_quantity);
+                            row.find(".total-cost").text(`$${response.total_cost.toFixed(2)}`);
+                            alert("Purchase successful!");
+                        }
+                    },
+                    error: function (response) {
+                        alert(response.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</div>
 {% endblock %}

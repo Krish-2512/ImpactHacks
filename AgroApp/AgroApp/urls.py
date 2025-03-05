@@ -18,9 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
+
+def logout_view(request):
+    logout(request)
+    return redirect('/site/login/')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('site/', include ('MainSite.urls')),
-     path('accounts/',include('django.contrib.auth.urls')),
+      path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/logout/', logout_view, name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

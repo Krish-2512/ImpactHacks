@@ -2,38 +2,101 @@
 
 {% block content %}
 
-<div class="profile-info">
-    <div class="dash-txt">
-    <h2>Welcome, {{ request.user.username }}!</h2>
-    <p><strong>Username:</strong> {{ request.user.username }}</p>
-<p><strong>Email:</strong> {{ request.user.email }}</p>
-<p><strong>Contact Number:</strong> {{ request.user.phone }}</p>
-<p><strong>phone:</strong> {{ request.user.phone }}</p>
-<p><strong>location:</strong> {{ request.user.location }}</p>
-</div>
-<div class="dash-btn">
-    <a href="{% url 'dashboard' %}" class="dashboard-button">Go to Dashboard</a>
+<div class="profile-container">
+    <!-- Welcome Message -->
+    <h1 class="welcome-message">Welcome, {{ request.user.username }}!</h1>
+
+    <div class="profile-content">
+        <!-- Profile Image (Left) -->
+        <div class="profile-img-container">
+            <img src="https://via.placeholder.com/150" alt="User Profile" class="profile-img">
+        </div>
+
+        <!-- User Info (Right) -->
+        <div class="profile-info">
+            <p><strong>Username:</strong> {{ request.user.username }}</p>
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+            <p><strong>Contact Number:</strong> {{ request.user.phone }}</p>
+            <p><strong>Location:</strong> {{ request.user.location }}</p>
+
+            <a href="{% url 'dashboard' %}" class="dashboard-button">Go to Dashboard</a>
+        </div>
+    </div>
 </div>
 
-</div>
 <style>
-    .dashboard-button {
-        display: block;
-        width: 250px;
-        padding: 15px;
-        background-color: #28a745;
-        color: white;
+    /* Apply Modern Font */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Profile Container */
+    .profile-container {
+        padding: 50px 10%;
+        min-height: 80vh;
+    }
+
+    /* Welcome Message */
+    .welcome-message {
+        font-size: 36px;
+        font-weight: bold;
         text-align: center;
-        text-decoration: none;
+        margin-bottom: 40px;
+        color: #222;
+    }
+
+    /* Profile Content: Image & Info */
+    .profile-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 80px; /* Increased space between image and text */
+    }
+
+    /* Profile Image */
+    .profile-img-container {
+        flex-shrink: 0;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #ccc;
+    }
+
+    /* Profile Info */
+    .profile-info {
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .profile-info p {
+        font-size: 20px;
+        margin: 12px 0;
+        color: #444;
+    }
+
+    /* Dashboard Button */
+    .dashboard-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 14px 22px;
+        background: #2575fc;
+        color: white;
         font-size: 18px;
         font-weight: bold;
         border-radius: 8px;
-        margin-top: 20px;
+        text-decoration: none;
+        transition: background 0.3s ease, color 0.3s ease;
     }
+
     .dashboard-button:hover {
-        background-color: #218838;
+        background: #ffcc00;
+        color: black;
     }
-    
 </style>
 
 {% endblock %}

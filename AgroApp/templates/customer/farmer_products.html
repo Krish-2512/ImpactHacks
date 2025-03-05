@@ -1,0 +1,37 @@
+{% extends 'site.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Products by {{ farmer.username }}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Available Quantity</th>
+                <th>Buy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <form method="POST" action="{% url 'purchase_product' product.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" min="1" max="{{ product.quantity }}" required>
+                        <button type="submit" class="btn btn-success">Buy</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No products available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MainSite',
+    'django_q',
+
+
 ]
 
 MIDDLEWARE = [
@@ -100,7 +103,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+Q_CLUSTER = {
+    'name': 'DjangoQ',
+    'workers': 4,
+    'recycle': 500,
+    'timeout': 60,
+    'scheduler': True,  # Enables scheduled tasks
+    'retry': 300,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default',
+}
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -131,9 +144,10 @@ STATICFILES_DIRS = [
 LOGIN_URL='/accounts/login'
 
 LOGIN_REDIRECT_URL='/site/profile'
-LOGOUT_REDIRECT_URL='/site/'
+
 AUTH_USER_MODEL = "MainSite.CustomUser"
 
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

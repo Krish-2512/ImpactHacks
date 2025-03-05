@@ -1,6 +1,203 @@
 {% extends "site.html" %}
 
 {% block content %}
-<h2>cntents</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Manage Your Products</h2>
 
+    <!-- Product Form -->
+    <div class="card p-4 mb-4">
+        <h4>Add a New Product</h4>
+        <form id="product-form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Product List -->
+    <div id="product-list">
+        {% if products %}
+        <table class="table mt-3" id="product-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr id="row-{{ product.id }}">
+                    <td class="name">{{ product.name }}</td>
+                    <td class="price">${{ product.price }}</td>
+                    <td class="quantity">{{ product.quantity }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm edit-btn" data-id="{{ product.id }}">Edit</button>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ product.id }}">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No products added yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- JavaScript for AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Add product via AJAX
+        $("#product-form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: window.location.href,
+                data: $(this).serialize(),
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+                success: function (response) {
+                    if (response.success) {
+                        $("#product-table tbody").append(`
+                            <tr id="row-${response.id}">
+                                <td class="name">${response.name}</td>
+                                <td class="price">$${response.price}</td>
+                                <td class="quantity">${response.quantity}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm edit-btn" data-id="${response.id}">Edit</button>
+                                    <button class="btn btn-danger btn-sm delete-btn" data-id="${response.id}">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                        $("#product-form")[0].reset();
+                    }
+                },
+                error: function (response) {
+                    console.log("Error:", response.responseJSON.errors);
+                }
+            });
+        });
+
+        // Edit product via AJAX
+        $(document).on("click", ".edit-btn", function () {
+            let row = $(this).closest("tr");
+            let id = $(this).data("id");
+            let name = row.find(".name").text();
+            let price = row.find(".price").text().replace("$", "");
+            let quantity = row.find(".quantity").text();
+
+            let newName = prompt("Edit Name:", name);
+            let newPrice = prompt("Edit Price:", price);
+            let newQuantity = prompt("Edit Quantity:", quantity);
+
+            if (newName !== null && newPrice !== null && newQuantity !== null) {
+                $.ajax({
+                    type: "POST",
+                    url: `/site/dashboard/product/edit/${id}/`,
+                    data: {
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                        "name": newName,
+                        "price": newPrice,
+                        "quantity": newQuantity,
+                    },
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
+                    success: function (response) {
+                        if (response.success) {
+                            row.find(".name").text(response.name);
+                            row.find(".price").text(`$${response.price}`);
+                            row.find(".quantity").text(response.quantity);
+                        }
+                    }
+                });
+            }
+        });
+
+        // Delete product via AJAX
+        $(document).on("click", ".delete-btn", function () {
+            let id = $(this).data("id");
+            let row = $(this).closest("tr");
+
+            if (confirm("Are you sure you want to delete this product?")) {
+                $.ajax({
+                    type: "POST",
+                    url: `/site/dashboard/product/delete/${id}/`,
+                    data: { "csrfmiddlewaretoken": "{{ csrf_token }}" },
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
+                    success: function (response) {
+                        if (response.success) {
+                            row.remove();
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<style>
+    /* Global Styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Section Title */
+    .section-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #222;
+    }
+
+    /* Form Container */
+    .product-form-container {
+        width: 50%;
+        margin: 0 auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+
+    /* Form Title */
+    .form-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Form Fields */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        background: #2575fc;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: #ffcc00;
+        color: black;
+    }</style>
 {% endblock %}
