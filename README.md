@@ -91,6 +91,7 @@ Once trained, ensure the model is loaded correctly in the Django views before ma
 - ![mainsite](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/mainsite.jpg)
 - ![price prediction](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/price%20prediction.jpg)
 - ![transaction details](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/transaction%20history.jpg)
+- ![weather forecast](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/weather%20forecast.jpg)
 
 ## Target Audience & Impact
 Agrow is tailor-made for Northeast Indian farmers, with the objective to:
