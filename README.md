@@ -85,6 +85,13 @@ Ensure that the model files (saved using `joblib`) are in the appropriate direct
 ```
 Once trained, ensure the model is loaded correctly in the Django views before making predictions.
 
+## Project Demo
+- ![Add new product](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/add%20new%20product.jpg)
+- ![dashboard](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/dashboard.jpg)
+- ![mainsite](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/mainsite.jpg)
+- ![price prediction](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/price%20prediction.jpg)
+- ![transaction details](https://github.com/Krish-2512/ImpactHacks/blob/master/AgroApp/static/media/transaction%20history.jpg)
+
 ## Target Audience & Impact
 Agrow is tailor-made for Northeast Indian farmers, with the objective to:
 - **Boost Productivity**: Farmers can schedule crops according to weather forecasts and maximize output.
