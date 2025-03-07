@@ -1,31 +1,81 @@
 {% extends 'site.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Transaction History</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity Sold</th>
-                <th>Total Cost</th>
-                <th>Sold At</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sale in sales %}
-            <tr>
-                <td>{{ sale.product.name }}</td>
-                <td>{{ sale.quantity_sold }}</td>
-                <td>${{ sale.total_cost }}</td>
-                <td>{{ sale.sold_at|date:"Y-m-d H:i:s" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No transactions found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container mt-5" id="contents">
+    <h2 class="mb-4 text-center text-primary">Transaction History</h2>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-center">Product</th>
+                            <th scope="col" class="text-center">Quantity Sold</th>
+                            <th scope="col" class="text-center">Total Cost</th>
+                            <th scope="col" class="text-center">Sold At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in sales %}
+                        <tr>
+                            <td class="text-center">{{ sale.product.name }}</td>
+                            <td class="text-center">{{ sale.quantity_sold }}</td>
+                            <td class="text-center text-success">${{ sale.total_cost }}</td>
+                            <td class="text-center">{{ sale.sold_at|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-2"></i>No transactions found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Custom CSS for additional styling */
+    #contents{
+    padding-top:50px;
+    padding-bottom:30px;
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: background-color 0.2s ease;
+    }
+
+    .thead-light th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+
+    .text-primary {
+        color: #0d6efd !important;
+    }
+
+    .text-success {
+        color: #28a745 !important;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+</style>
 {% endblock %}

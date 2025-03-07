@@ -1,5 +1,267 @@
 {% extends "top.html"%}
+{% load static %}
 
-{% block content %}<h1>welcome to farmer page</h1>{% endblock %}
+
+{% block content %} <style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* About Section Styles */
+.about-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 20px;
+    margin-top: 30px;
+    background: linear-gradient(135deg, #d4edda, #c3e6cb); /* Stronger green gradient */
+    text-align: center; /* Center-align text */
+}
+
+.about-content {
+    max-width: 50%;
+    margin: 0 auto; /* Center the content */
+}
+
+.about-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2E7D32; /* Dark green */
+}
+
+.about-content p {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px; /* Limit paragraph width for better readability */
+    margin: 0 auto; /* Center the paragraph */
+}
+
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-image img {
+    width: 250px; /* Fixed width for the circular image */
+    height: 250px; /* Fixed height for the circular image */
+    border-radius: 50%; /* Make the image circular */
+    object-fit: cover; /* Ensure the image covers the circular area */
+    border: 5px solid #4CAF50; /* Add a green border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Responsive Styles for About Section */
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-content {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .about-image img {
+        width: 200px; /* Smaller size for mobile */
+        height: 200px; /* Smaller size for mobile */
+    }
+}
+
+/* Features Section Styles */
+.features-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9); /* Light green gradient */
+}
+
+.features-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 15px 30px;
+    display: inline-block;
+    border-radius: 50px; /* Rounded rectangle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-boxes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 22%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-10px); /* Lift effect */
+    background: linear-gradient(135deg, #4CAF50, #45a049); /* Green gradient on hover */
+    color: white;
+}
+
+.feature-box:hover h3,
+.feature-box:hover p {
+    color: white; /* Change text color on hover */
+}
+
+.feature-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #2E7D32; /* Dark green */
+}
+
+.feature-box p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Testimonials Section Styles */
+.testimonials-section {
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #d4edda, #c3e6cb); /* Stronger green gradient */
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 15px 30px;
+    display: inline-block;
+    border-radius: 50px; /* Rounded rectangle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.testimonial-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px); /* Lift effect */
+    background: linear-gradient(135deg, #4CAF50, #45a049); /* Green gradient on hover */
+    color: white;
+}
+
+.testimonial-card:hover p,
+.testimonial-card:hover span {
+    color: white; /* Change text color on hover */
+}
+
+.testimonial-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.testimonial-card span {
+    font-size: 14px;
+    color: #777;
+    font-style: italic;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-content {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .feature-boxes, .testimonial-cards {
+        flex-direction: column;
+    }
+
+    .feature-box, .testimonial-card {
+        width: 100%;
+    }
+}
+ </style>
+     
+     <!-- About Section -->
+     <section class="about-section">
+         <div class="about-content">
+             <h1>Welcome to Agrow</h1>
+             <p>Agrow is a farmer management system designed to help farmers manage their crops and finances efficiently. Our platform provides AI tools to track current weather trends, monitor growth and connect with buyers.</p>
+         </div>
+         <div class="about-image">
+             <img src="{% static 'media/farmer.jpg' %}" alt="Farmer Image">
+         </div>
+     </section>
+ 
+     <!-- Features Section -->
+     <section class="features-section">
+         <h2>Key Features</h2>
+         <div class="feature-boxes">
+             <div class="feature-box">
+                 <h3>Crop Management</h3>
+                 <p>Track crop growth, monitor soil health, and plan harvests efficiently.</p>
+             </div>
+             <div class="feature-box">
+                 <h3>Weather Prediction</h3>
+                 <p>Keep a track of upcoming weather conditions and plan the produce accordingly.</p>
+             </div>
+             <div class="feature-box">
+                 <h3>Financial Insights</h3>
+                 <p>Get detailed financial reports and AI suggestions to optimize farm profitability.</p>
+             </div>
+             <div class="feature-box">
+                 <h3>Marketplace</h3>
+                 <p>Connect with buyers and sell your produce directly through the platform.</p>
+             </div>
+         </div>
+     </section>
+ 
+     <!-- Testimonials Section -->
+     <section class="testimonials-section">
+         <h2>What Our Users Say</h2>
+         <div class="testimonial-cards">
+             <div class="testimonial-card">
+                 <p>"Agrow has transformed the way I manage my produce. The AI crop prediction is a game changer!"</p>
+                 <span>- Manan Sadana</span>
+             </div>
+             <div class="testimonial-card">
+                 <p>"The financial insights and AI crop suggestion helped me reduce costs and increase profits. Highly recommended!"</p>
+                 <span>- Pratyush Jha</span>
+             </div>
+             <div class="testimonial-card">
+                 <p>"The marketplace feature connected me with buyers directly. It's so convenient and the weather prediction is a life saver too!"</p>
+                 <span>- Sameeran Nikam</span>
+             </div>
+         </div>
+     </section>
+     {% endblock %}
 
 

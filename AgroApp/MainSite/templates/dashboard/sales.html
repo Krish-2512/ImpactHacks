@@ -86,5 +86,122 @@
             });
         });
     </script>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+    
+        /* Container */
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+        }
+    
+        /* Section Title */
+        h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+            margin-top: 100px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* Table Styling */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .table th {
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            font-weight: bold;
+        }
+    
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+    
+        /* Input Fields */
+        .quantity-input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .quantity-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+    
+        /* Buttons */
+        .btn-success {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #28a745, #6fdd8b);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* No Products Message */
+        #sales-section p {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 20px;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 28px;
+            }
+    
+            .table th,
+            .table td {
+                padding: 10px;
+            }
+    
+            .quantity-input {
+                width: 60px;
+            }
+    
+            .btn-success {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </div>
 {% endblock %}
