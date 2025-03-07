@@ -96,7 +96,7 @@ Agrow is tailor-made for Northeast Indian farmers, with the objective to:
 - **Integration with Microfinance & Insurance**: Automated credit scoring for farmers and insurance products tomitigate crop loss risks..
 - **Offline Accessibility**: Mail-based interactions for farmers with limited internet access.
 - **Community & Advisory Features**: A platform where farmers can exchange experiences and get expert advice.
-- **Continuous Improvements to the Time Series Model**: We plan to continuously keep scraping current day’s weather using the Weather API. We will then add this data to our dataset on a weekly basis and re-train the model. This increase in data can help the model capture seasonal and yearly trends, improving prediction performance.
+- **Continuous Improvements to the Time Series Model**: We plan to continuously keep scraping current day’s weather using the Weather API and Government websites for crop price data. We will then add this data to our dataset on a weekly basis and re-train the model. This increase in data can help the model capture seasonal and yearly trends, improving prediction performance.
 
 ## Conclusion
 Agrow's mission is to transform farming in Northeast India through the use of AI and technology to enhance efficiency, profitability, and sustainability for farmers. By offering crucial tools and predictive information, Agrow aids farmers in making knowledge-informed decisions, ultimately leading to the development of the agricultural sector in the region.
