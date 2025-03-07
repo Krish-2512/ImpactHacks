@@ -1,0 +1,58 @@
+{% extends 'site.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Your Cart 🛒</h2>
+
+    {% if cart %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, item in cart.items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.total_cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'checkout' %}" class="btn-final-buy">Proceed to Buy</a>
+
+    {% else %}
+    <p>Your cart is empty! 🛒</p>
+    {% endif %}
+</div>
+
+<style>
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cart-table th, .cart-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .btn-final-buy {
+        display: inline-block;
+        padding: 10px 20px;
+        background: green;
+        color: white;
+        text-decoration: none;
+        margin-top: 20px;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

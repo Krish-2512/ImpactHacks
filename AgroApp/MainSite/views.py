@@ -10,6 +10,122 @@ from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
 
+
+import json
+import os
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from Models.WeatherPrediction.weatherModel import load_models_and_forecast, predict_weather_condition
+model = load_models_and_forecast(target_date="2025-03-08")
+
+
+# def weather_prediction_view(request):
+#     if request.method == "GET":
+#         return render(request, "dashboard/weather_template.html")  # Return the template on GET request
+#
+#     if request.method == "POST":  # Run model when button is clicked
+#         try:
+#             prediction = predict_weather_condition(model)  # Run model
+#             return JsonResponse({"prediction": prediction})  # Return prediction as JSON
+#         except Exception as e:
+#             return JsonResponse({"error": str(e)}, status=500)
+#
+#     return JsonResponse({"error": "Invalid request method"}, status=405)
+#
+# def weather_prediction_view(request):
+#     if request.method == "GET":
+#         return render(request, "dashboard/weather_template.html")  # Load template on GET request
+#
+#     if request.method == "POST":  # Run model on button click
+#         try:
+#             print("Running model...")  # Debugging
+#             prediction = predict_weather_condition(model)  # Call model function
+#             print("Prediction result:", prediction)  # Debugging
+#             return JsonResponse({"prediction": prediction})  # Return JSON response
+#         except Exception as e:
+#             print("Error:", str(e))  # Print error to server logs
+#             return JsonResponse({"error": str(e)}, status=500)
+#
+#     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+
+def weather_prediction_view(request):
+    if request.method == "POST":
+        try:
+            # Get forecast data from the model
+            forecast = model  # Assuming `model` contains the forecast dictionary
+
+            # Extract values correctly
+            temperature = forecast.get('Temperature', 0)  # Provide a default value if missing
+            humidity = forecast.get('Humidity', 0)
+            wind_speed = forecast.get('Wind_Speed', 0)
+            precipitation = forecast.get('Precipitation', 0)
+
+            # Pass all required arguments to `predict_weather_condition`
+            condition = predict_weather_condition(temperature, humidity, wind_speed, precipitation)
+
+            # return JsonResponse({"prediction": condition })  # Return prediction
+            return JsonResponse({
+                "prediction": condition,
+                "temperature": temperature,
+                "humidity": humidity,
+                "wind_speed": wind_speed,
+                "precipitation": precipitation
+            })
+
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # Render the weather template when accessing the page
+    return render(request, "dashboard/weather_template.html")
+
+#
+# from django.shortcuts import render
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# import json
+# from Models.WeatherPrediction.weatherModel import load_models_and_forecast, predict_weather_condition
+#
+# @csrf_exempt  # Remove in production, use CSRF tokens instead
+# def weather_prediction_view(request):
+#     if request.method == "POST":
+#         try:
+#             # Parse JSON request
+#             data = json.loads(request.body)
+#             target_date = data.get("date")  # Get date from request
+#
+#             if not target_date:
+#                 return JsonResponse({"error": "Date is required"}, status=400)
+#
+#             # Load the model with the given date
+#             model = load_models_and_forecast(target_date=target_date)
+#
+#             # Extract values correctly
+#             temperature = model.get("Temperature", 0)
+#             humidity = model.get("Humidity", 0)
+#             wind_speed = model.get("Wind_Speed", 0)
+#             precipitation = model.get("Precipitation", 0)
+#
+#             # Pass all required arguments to `predict_weather_condition`
+#             condition = predict_weather_condition(temperature, humidity, wind_speed, precipitation)
+#
+#             # Return JSON response
+#             return JsonResponse({
+#                 "prediction": condition,
+#                 "temperature": temperature,
+#                 "humidity": humidity,
+#                 "wind_speed": wind_speed,
+#                 "precipitation": precipitation
+#             })
+#
+#         except Exception as e:
+#             return JsonResponse({"error": str(e)}, status=500)
+#
+#     return render(request, "dashboard/weather_template.html")
+
+
 User = get_user_model()
 
 # Create your views here.
@@ -249,9 +365,14 @@ def purchase_product(request, product_id):
         Sale.objects.create(product=product, quantity_sold=quantity, total_cost=total_cost)
 
         # Redirect to transactions page
-        return redirect("transaction_history")
+        # return redirect("transaction_history")
 
     return render(request, "customer/purchase_product.html", {"product": product})
+
+
+
+
+
 
 def transaction_history(request):
     sales = Sale.objects.filter(product__user=request.user).order_by("-sold_at")

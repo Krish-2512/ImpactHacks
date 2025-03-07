@@ -1,31 +1,68 @@
 {% extends 'site.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Transaction History</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity Sold</th>
-                <th>Total Cost</th>
-                <th>Sold At</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sale in sales %}
-            <tr>
-                <td>{{ sale.product.name }}</td>
-                <td>{{ sale.quantity_sold }}</td>
-                <td>${{ sale.total_cost }}</td>
-                <td>{{ sale.sold_at|date:"Y-m-d H:i:s" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No transactions found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container mt-4" id="contents">
+    <h2 class="mb-4 text-center">Transaction History</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity Sold</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Sold At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.product.name }}</td>
+                    <td>{{ sale.quantity_sold }}</td>
+                    <td>${{ sale.total_cost }}</td>
+                    <td>{{ sale.sold_at|date:"Y-m-d H:i:s" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No transactions found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<style>
+
+
+    #contents{
+
+    padding-top:60px;
+
+    padding-bottom:200px;
+
+    }
+
+    /* Custom CSS for additional styling */
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: background-color 0.3s ease;
+    }
+
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .thead-dark th {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+</style>
 {% endblock %}

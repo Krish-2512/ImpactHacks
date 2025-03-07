@@ -1,37 +1,250 @@
+
+
+
 {% extends 'site.html' %}
 
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Products by {{ farmer.username }}</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Available Quantity</th>
-                <th>Buy</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>${{ product.price }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>
-                    <form method="POST" action="{% url 'purchase_product' product.id %}">
-                        {% csrf_token %}
-                        <input type="number" name="quantity" min="1" max="{{ product.quantity }}" required>
-                        <button type="submit" class="btn btn-success">Buy</button>
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No products available.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container" id="content">
+    <div class="farmer-header">
+        <h2 class="farmer-title">🌾 Products</h2>
+        <div class="farmer-meta">
+            <i class="fas fa-user-tie"></i>
+            <span>{{ products|length }} products available</span>
+        </div>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-body">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <div class="product-details">
+                    <div class="detail-item">
+                        <i class="fas fa-tag"></i>
+                        <span>${{ product.price }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-box-open"></i>
+                        <span>{{ product.quantity }} in stock</span>
+                    </div>
+                </div>
+                <form method="POST" action="{% url 'purchase_product' product.id %}" class="purchase-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" name="quantity"
+                               class="quantity-input"
+                               min="1"
+                               max="{{ product.quantity }}"
+                               required
+                               placeholder="Qty">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-cart-plus"></i> Buy
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <i class="fas fa-seedling"></i>
+            <p>No products available at the moment</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
+<style>
+    #content{
+    padding-top:100px;}
+    .container {
+        max-width: 1200px;
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .farmer-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .farmer-title {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .farmer-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        color: #7f8c8d;
+        font-size: 1.1rem;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-body {
+        padding: 1.5rem;
+    }
+
+    .product-name {
+        color: #34495e;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-details {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #7f8c8d;
+    }
+
+    .detail-item i {
+        color: #27ae60;
+    }
+
+    .purchase-form .form-group {
+        display: flex;
+        gap: 0.8rem;
+    }
+
+    .quantity-input {
+        width: 80px;
+        padding: 0.6rem;
+        border: 2px solid #ecf0f1;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .quantity-input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+    }
+
+    .submit-btn {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        background: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .submit-btn:hover {
+        background: #219a52;
+        transform: translateY(-1px);
+    }
+
+    .empty-state {
+        text-align: center;
+        grid-column: 1 / -1;
+        padding: 4rem 1rem;
+        color: #95a5a6;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #bdc3c7;
+    }
+
+    @media (max-width: 768px) {
+        .farmer-title {
+            font-size: 2rem;
+        }
+
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.purchase-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const formData = new FormData(form);
+            const button = form.querySelector('button');
+            const originalText = button.innerHTML;
+
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            button.disabled = true;
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    // Update stock quantity
+                    const stockElement = form.closest('.product-card').querySelector('.detail-item:nth-child(2) span');
+                    stockElement.textContent = data.remaining_quantity + ' in stock';
+
+                    // Update input max value
+                    form.querySelector('input[type="number"]').max = data.remaining_quantity;
+
+                    // Show success message
+                    showToast('✅ ' + data.message);
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .finally(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+        });
+    });
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = toast ${type};
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+</script>
+
 {% endblock %}

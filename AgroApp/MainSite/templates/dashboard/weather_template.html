@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #predict_btn {
+            display: block;
+            width: 200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #predict_btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #predict_btn:active {
+            transform: translateY(0);
+        }
+
+        .weather-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        #prediction_result {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .weather-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .weather-data p {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #34495e;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .weather-data p span {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .weather-data {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<!--    <script>-->
+<!--        function getCSRFToken() {-->
+<!--            const cookies = document.cookie.split(";");-->
+<!--            for (let cookie of cookies) {-->
+<!--                const [name, value] = cookie.trim().split("=");-->
+<!--                if (name === "csrftoken") {-->
+<!--                    return value;-->
+<!--                }-->
+<!--            }-->
+<!--            return "";-->
+<!--        }-->
+
+<!--        function runPrediction() {-->
+<!--            fetch("/site/predict/", {  // Make sure the URL matches `urls.py`-->
+<!--                method: "POST",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json",-->
+<!--                    "X-CSRFToken": getCSRFToken()-->
+<!--                },-->
+<!--                body: JSON.stringify({})-->
+<!--            })-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                if (data.prediction) {-->
+<!--                    document.getElementById("prediction_result").textContent = "Prediction: " + data.prediction;-->
+<!--                    document.getElementById("temperature").textContent = "Temperature: " + data.temperature + "°C";-->
+<!--                    document.getElementById("humidity").textContent = "Humidity: " + data.humidity + "%";-->
+<!--                    document.getElementById("wind_speed").textContent = "Wind Speed: " + data.wind_speed + " km/h";-->
+<!--                    document.getElementById("precipitation").textContent = "Precipitation: " + data.precipitation + " mm";-->
+<!--                } else {-->
+<!--                    document.getElementById("prediction_result").textContent = "Error: " + data.error;-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => console.error("Fetch error:", error));-->
+<!--        }-->
+<!--    </script>-->
+    <script>
+    function getCSRFToken() {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split("=");
+            if (name === "csrftoken") {
+                return value;
+            }
+        }
+        return "";
+    }
+
+    function runPrediction() {
+        fetch("/site/predict/", {  // Ensure this matches your Django `urls.py`
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken()
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.prediction) {
+                document.getElementById("prediction_result").textContent = "🌤 Prediction: " + data.prediction;
+
+                document.getElementById("temperature").innerHTML = `<span>${Math.ceil(data.temperature)}°C</span>Temperature`;
+                document.getElementById("humidity").innerHTML = `<span>${Math.round(data.humidity)}%</span>Humidity`;
+                document.getElementById("wind_speed").innerHTML = `<span>${Math.round(data.wind_speed * 100) / 100}
+ km/h</span>Wind Speed`;
+                document.getElementById("precipitation").innerHTML = `<span>${Math.round(data.precipitation * 100) / 100}
+ mm</span>Precipitation`;
+            } else {
+                document.getElementById("prediction_result").textContent = "⚠️ Error: " + (data.error || "Unknown error");
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            document.getElementById("prediction_result").textContent = "⚠️ Error fetching weather data.";
+        });
+    }
+</script>
+
+</head>
+<body>
+<!--    <h1>Weather Prediction</h1>-->
+<!--    <button id="predict_btn" onclick="runPrediction()">Run Prediction</button>-->
+<!--    <p id="prediction_result">Waiting for prediction...</p>-->
+<!--    <p id="temperature"></p>-->
+<!--    <p id="humidity"></p>-->
+<!--    <p id="wind_speed"></p>-->
+<!--    <p id="precipitation"></p>-->
+ <div class="container">
+        <h1>☀️ Weather Prediction</h1>
+        <button id="predict_btn" onclick="runPrediction()">Get Weather Forecast</button>
+        <div class="weather-card">
+            <p id="prediction_result">Waiting for prediction...</p>
+            <div class="weather-data">
+                <p><span id="temperature" style="font-size:15px">--°C</span>Temperature</p>
+                <p><span id="humidity" style="font-size:15px">--%</span>Humidity</p>
+                <p><span id="wind_speed" style="font-size:15px">-- km/h</span>Wind Speed</p>
+                <p><span id="precipitation" style="font-size:15px">-- mm</span>Precipitation</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Weather Prediction</title>-->
+<!--    <script>-->
+<!--        function getCSRFToken() {-->
+<!--            const cookies = document.cookie.split(";");-->
+<!--            for (let cookie of cookies) {-->
+<!--                const [name, value] = cookie.trim().split("=");-->
+<!--                if (name === "csrftoken") {-->
+<!--                    return value;-->
+<!--                }-->
+<!--            }-->
+<!--            return "";-->
+<!--        }-->
+
+<!--        function runPrediction() {-->
+<!--            const date = document.getElementById("date_input").value;-->
+<!--            if (!date) {-->
+<!--                alert("Please select a date!");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            fetch("/predict/", {-->
+<!--                method: "POST",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json",-->
+<!--                    "X-CSRFToken": getCSRFToken()-->
+<!--                },-->
+<!--                body: JSON.stringify({ date: date })  // Send date to backend-->
+<!--            })-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                if (data.prediction) {-->
+<!--                    document.getElementById("prediction_result").textContent = "Prediction: " + data.prediction;-->
+<!--                    document.getElementById("temperature").textContent = "Temperature: " + data.temperature + "°C";-->
+<!--                    document.getElementById("humidity").textContent = "Humidity: " + data.humidity + "%";-->
+<!--                    document.getElementById("wind_speed").textContent = "Wind Speed: " + data.wind_speed + " km/h";-->
+<!--                    document.getElementById("precipitation").textContent = "Precipitation: " + data.precipitation + " mm";-->
+<!--                } else {-->
+<!--                    document.getElementById("prediction_result").textContent = "Error: " + data.error;-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => console.error("Fetch error:", error));-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Weather Prediction</h1>-->
+<!--    <label for="date_input">Select Date:</label>-->
+<!--    <input type="date" id="date_input" required>-->
+<!--    <button id="predict_btn" onclick="runPrediction()">Run Prediction</button>-->
+<!--    <p id="prediction_result">Waiting for prediction...</p>-->
+<!--    <p id="temperature"></p>-->
+<!--    <p id="humidity"></p>-->
+<!--    <p id="wind_speed"></p>-->
+<!--    <p id="precipitation"></p>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,24 +1,20 @@
 {% extends "top.html" %}
 
 {% block content %}
+{% load static %} 
 <div class="register-container">
     <div class="register-box">
-        <!-- Image on Top -->
         <div class="text-center">
-            <img src="https://via.placeholder.com/150" alt="Login Image" class="register-img">
+            <img src="{% static 'media/farmer.png' %}" alt="Login Image" class="register-img">
         </div>
 
         <h2 class="text-center">Login</h2>
 
         <form method="post">
             {% csrf_token %}
-
-            <!-- Django Form Styling -->
             <div class="form-group">
                 {{ form.as_p }}
             </div>
-
-            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
 
@@ -29,6 +25,13 @@
 </div>
 
 <style>
+    body{
+        background-image: url("{% static 'media/f1.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+    }
     /* Center the Login Box */
     .register-container {
         display: flex;

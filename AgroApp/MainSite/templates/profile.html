@@ -1,18 +1,16 @@
 {% extends "site.html" %}
-
+{% load static %}
 {% block content %}
 
 <div class="profile-container">
-    <!-- Welcome Message -->
-    <h1 class="welcome-message">Welcome, {{ request.user.username }}!</h1>
+    <h1 class="welcome-message">WELCOME, {{ request.user.username }}</h1>
 
     <div class="profile-content">
-        <!-- Profile Image (Left) -->
+       
         <div class="profile-img-container">
-            <img src="https://via.placeholder.com/150" alt="User Profile" class="profile-img">
+         
+            <img src="{% static 'media/farmer.png' %}" alt="User Profile" class="profile-img">
         </div>
-
-        <!-- User Info (Right) -->
         <div class="profile-info">
             <p><strong>Username:</strong> {{ request.user.username }}</p>
             <p><strong>Email:</strong> {{ request.user.email }}</p>
@@ -30,21 +28,37 @@
         font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
+        background-image: url("{% static 'media/farm2.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #333;
     }
 
     /* Profile Container */
     .profile-container {
         padding: 50px 10%;
-        min-height: 80vh;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin: 50px auto;
+        max-width: 1200px;
     }
 
     /* Welcome Message */
     .welcome-message {
-        font-size: 36px;
+        font-size: 48px;
         font-weight: bold;
         text-align: center;
         margin-bottom: 40px;
         color: #222;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     /* Profile Content: Image & Info */
@@ -52,31 +66,49 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 80px; /* Increased space between image and text */
+        gap: 80px;
+        flex-wrap: wrap; /* Ensure responsiveness */
     }
 
     /* Profile Image */
     .profile-img-container {
         flex-shrink: 0;
+        text-align: center;
     }
 
     .profile-img {
         width: 150px;
         height: 150px;
         border-radius: 50%;
-        border: 4px solid #ccc;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .profile-img:hover {
+        transform: scale(1.1);
     }
 
     /* Profile Info */
     .profile-info {
         max-width: 600px;
-        text-align: center;
+        text-align: left;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .profile-info p {
         font-size: 20px;
-        margin: 12px 0;
+        margin: 15px 0;
         color: #444;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .profile-info p strong {
+        color: #2575fc;
     }
 
     /* Dashboard Button */
@@ -84,18 +116,40 @@
         display: inline-block;
         margin-top: 20px;
         padding: 14px 22px;
-        background: #2575fc;
+        background: linear-gradient(135deg, #2575fc, #6a11cb);
         color: white;
         font-size: 18px;
         font-weight: bold;
         border-radius: 8px;
         text-decoration: none;
-        transition: background 0.3s ease, color 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .dashboard-button:hover {
-        background: #ffcc00;
-        color: black;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .profile-content {
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .welcome-message {
+            font-size: 36px;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+        }
     }
 </style>
 

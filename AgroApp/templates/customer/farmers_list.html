@@ -1,8 +1,9 @@
 {% extends 'site.html' %}
+{% load static %} 
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Registered Farmers</h2>
+<div class="container mt-4" id="content">
+    <h2 style="color:red ; text-align: center">REGISTERED FARMERS</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -38,5 +39,22 @@
         </tbody>
     </table>
 </div>
+
+<style>
+      body{
+        background-image: url("{% static 'media/f1.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+       
+      }
+    
+    /* Profile Container */
+    #content {
+        background-image: url("{% static 'media/f1.jpg' %}");
+        margin-top: 200px;
+        padding-top:30px;
+    }
+    </style>
 {% endblock %}
 

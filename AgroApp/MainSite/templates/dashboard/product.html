@@ -3,8 +3,6 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Manage Your Products</h2>
-
-    <!-- Product Form -->
     <div class="card p-4 mb-4">
         <h4>Add a New Product</h4>
         <form id="product-form" method="post">
@@ -13,8 +11,6 @@
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
     </div>
-
-    <!-- Product List -->
     <div id="product-list">
         {% if products %}
         <table class="table mt-3" id="product-table">
@@ -31,10 +27,9 @@
                 <tr id="row-{{ product.id }}">
                     <td class="name">{{ product.name }}</td>
                     <td class="price">${{ product.price }}</td>
-                    <td class="quantity">{{ product.quantity }}</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm edit-btn" data-id="{{ product.id }}">Edit</button>
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ product.id }}">Delete</button>
+                 <td>
+          <button class="btn btn-warning btn-sm edit-btn" data-id="{{ product.id }}">Edit</button>
+            <button class="btn btn-danger btn-sm delete-btn" data-id="{{ product.id }}">Delete</button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -45,12 +40,9 @@
         {% endif %}
     </div>
 </div>
-
-<!-- JavaScript for AJAX -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Add product via AJAX
         $("#product-form").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -79,8 +71,6 @@
                 }
             });
         });
-
-        // Edit product via AJAX
         $(document).on("click", ".edit-btn", function () {
             let row = $(this).closest("tr");
             let id = $(this).data("id");
@@ -113,8 +103,6 @@
                 });
             }
         });
-
-        // Delete product via AJAX
         $(document).on("click", ".delete-btn", function () {
             let id = $(this).data("id");
             let row = $(this).closest("tr");
@@ -139,65 +127,166 @@
     /* Global Styling */
     body {
         font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
+        background-color: #f8f9fa;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1200px;
+        padding: 20px;
     }
 
     /* Section Title */
-    .section-title {
+    h2 {
         text-align: center;
-        font-size: 28px;
+        font-size: 36px;
         font-weight: bold;
+        color: #333;
         margin-bottom: 30px;
-        color: #222;
+        margin-top: 100px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    /* Form Container */
-    .product-form-container {
-        width: 50%;
-        margin: 0 auto;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Card Styling */
+    .card {
         background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
     }
 
     /* Form Title */
-    .form-title {
-        font-size: 22px;
+    h4 {
+        font-size: 24px;
         font-weight: bold;
+        color: #333;
         margin-bottom: 20px;
         text-align: center;
     }
 
     /* Form Fields */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+    }
+
     .form-group input,
     .form-group select,
     .form-group textarea {
         width: 100%;
         padding: 12px;
-        margin: 8px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
         font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        outline: none;
     }
 
     /* Submit Button */
     .btn-submit {
         width: 100%;
-        padding: 12px;
+        padding: 14px;
         font-size: 18px;
         font-weight: bold;
-        background: #2575fc;
+        background: linear-gradient(135deg, #007bff, #00bfff);
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
-        transition: background 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .btn-submit:hover {
-        background: #ffcc00;
-        color: black;
-    }</style>
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Product Table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background: linear-gradient(135deg, #007bff, #00bfff);
+        color: white;
+        font-weight: bold;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Action Buttons */
+    .btn-warning,
+    .btn-danger {
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: white;
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+    }
+
+    .btn-warning:hover,
+    .btn-danger:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 28px;
+        }
+
+        .card {
+            padding: 20px;
+        }
+
+        .btn-submit {
+            font-size: 16px;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px;
+        }
+    }
+</style>
 {% endblock %}

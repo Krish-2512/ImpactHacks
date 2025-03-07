@@ -1,11 +1,12 @@
 {% extends "top.html" %}
 
 {% block content %}
+{% load static %} 
 <div class="register-container">
     <div class="register-box">
         <!-- Image on Top -->
         <div class="text-center">
-            <img src="https://via.placeholder.com/150" alt="Register Image" class="register-img">
+            <img src="{% static 'media/farmer.png' %}" alt="Register Image" class="register-img">
         </div>
 
         <h2 class="text-center">Register</h2>
@@ -39,13 +40,20 @@
 
 
 <style>
+        body{
+        background-image: url("{% static 'media/f1.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+    }
     /* Center the Register Box */
     .register-container {
         display: flex;
         justify-content: center;
         align-items: center;
       
-        background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient Background */
+        
       
     }
 

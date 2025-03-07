@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Weather Forecast</h2>
+        <label for="date">Select Date:</label>
+        <input type="date" id="date">
+        <button onclick="fetchWeather()">Get Forecast</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function fetchWeather() {
+            const date = document.getElementById("date").value;
+            if (!date) {
+                alert("Please select a date.");
+                return;
+            }
+
+            fetch("/weather/forecast/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ date: date })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("result").innerHTML = `<p style="color: red;">${data.error}</p>`;
+                } else {
+                    document.getElementById("result").innerHTML = `
+                        <h3>Forecast for ${date}</h3>
+                        <p><strong>Temperature:</strong> ${data.Temperature} °C</p>
+                        <p><strong>Humidity:</strong> ${data.Humidity} %</p>
+                        <p><strong>Wind Speed:</strong> ${data.Wind_Speed} km/h</p>
+                        <p><strong>Precipitation:</strong> ${data.Precipitation} mm</p>
+                        <p><strong>Condition:</strong> ${data.Condition}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                document.getElementById("result").innerHTML = `<p style="color: red;">Error fetching data.</p>`;
+            });
+        }
+    </script>
+
+</body>
+</html>

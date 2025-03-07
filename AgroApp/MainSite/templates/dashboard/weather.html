@@ -1,6 +1,179 @@
-{% extends "site.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    
+        /* Container */
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    
+        /* Heading */
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    
+        /* Input and Button */
+        input[type="date"] {
+            width: 100%;
+            max-width: 250px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        input[type="date"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+    
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        }
+    
+        /* Result Section */
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .result h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+    
+        .result p {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
+        }
+    
+        .result p strong {
+            color: #007bff;
+        }
+    
+        /* Error Message */
+        .result p[style*="color: red;"] {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 28px;
+            }
+    
+            input[type="date"] {
+                width: 100%;
+                max-width: none;
+            }
+    
+            button {
+                width: 100%;
+                padding: 14px;
+            }
+    
+            .result h3 {
+                font-size: 22px;
+            }
+    
+            .result p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
 
-{% block content %}
-<h2>cntents</h2>
+    <div class="container">
+        <h2>Weather Forecast</h2>
+        <label for="date">Select Date:</label>
+        <input type="date" id="date">
+        <button onclick="fetchWeather()">Get Forecast</button>
 
-{% endblock %}
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function fetchWeather() {
+            const date = document.getElementById("date").value;
+            if (!date) {
+                alert("Please select a date.");
+                return;
+            }
+
+            fetch("/weather/forecast/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ date: date })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("result").innerHTML = `<p style="color: red;">${data.error}</p>`;
+                } else {
+                    document.getElementById("result").innerHTML = `
+                        <h3>Forecast for ${date}</h3>
+                        <p><strong>Temperature:</strong> ${data.Temperature} °C</p>
+                        <p><strong>Humidity:</strong> ${data.Humidity} %</p>
+                        <p><strong>Wind Speed:</strong> ${data.Wind_Speed} km/h</p>
+                        <p><strong>Precipitation:</strong> ${data.Precipitation} mm</p>
+                        <p><strong>Condition:</strong> ${data.Condition}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                document.getElementById("result").innerHTML = `<p style="color: red;">Error fetching data.</p>`;
+            });
+        }
+    </script>
+
+</body>
+</html>
