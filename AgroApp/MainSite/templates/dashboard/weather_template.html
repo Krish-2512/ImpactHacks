@@ -187,7 +187,7 @@
                 document.getElementById("humidity").innerHTML = `<span>${Math.round(data.humidity)}%</span>Humidity`;
                 document.getElementById("wind_speed").innerHTML = `<span>${Math.round(data.wind_speed * 100) / 100}
  km/h</span>Wind Speed`;
-                document.getElementById("precipitation").innerHTML = `<span>data.precipitation
+                document.getElementById("precipitation").innerHTML = `<span>${(data.precipitation)}
  mm</span>Precipitation`;
             } else {
                 document.getElementById("prediction_result").textContent = "⚠️ Error: " + (data.error || "Unknown error");
