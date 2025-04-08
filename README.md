@@ -1,4 +1,4 @@
-# Agrow: Revolutionizing Agriculture in Northeast India
+# AGROW: Revolutionizing Agriculture in Northeast India
 
 ## Overview
 Agrow is an online application specifically created to help farmers in Northeast India by providing them with easy-to-use platforms to effectively control their agricultural crop, monitor stocks, and drive data-based insights for maximizing yield. The web application incorporates AI models to project weather patterns and decide on proper crop prices in order to aid farmers in driving informed decisions and increasing their crop productivity.
