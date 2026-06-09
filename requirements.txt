@@ -14,10 +14,10 @@ pydantic[email]==2.9.0
 pydantic-settings==2.6.0
 
 # LangChain + Groq + LangGraph
-langchain==0.3.0
-langchain-groq==0.2.0
-langchain-core==0.3.0
-langgraph==0.2.0
+langchain>=0.3.0,<0.4
+langchain-groq>=0.2.0,<0.3
+langchain-core>=0.3.0,<0.4
+langgraph>=0.2.50,<0.3
 
 # RAG
 fastembed==0.3.6
