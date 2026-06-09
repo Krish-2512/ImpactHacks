@@ -31,11 +31,15 @@ async def run(state: AgentState) -> AgentState:
         print(f"[advisory_agent] RAG retrieval failed (continuing without context): {e}")
         context_chunks = []
 
+    def _f(v, fallback="N/A"):
+        try: return f"{float(v):.1f}"
+        except (TypeError, ValueError): return str(fallback)
+
     crops = state.get("farm_state", {}).get("primary_crops", ["tomato", "brinjal"])
     weather_summary = (
         f"{state['weather_forecast'].get('Condition', 'N/A')} weather, "
-        f"{state['weather_forecast'].get('Temperature', 'N/A'):.1f}°C, "
-        f"{state['weather_forecast'].get('Humidity', 'N/A'):.1f}% humidity"
+        f"{_f(state['weather_forecast'].get('Temperature'))}°C, "
+        f"{_f(state['weather_forecast'].get('Humidity'))}% humidity"
     )
 
     llm = ChatGroq(
