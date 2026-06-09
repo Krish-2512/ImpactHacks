@@ -24,10 +24,9 @@ COPY --from=builder /install /usr/local
 
 # Copy application code
 COPY backend/   ./backend/
-COPY rag_data/  ./rag_data/
 
-# Create directories needed at runtime (ml_data is generated on first startup)
-RUN mkdir -p qdrant_data ml_data
+# Create directories needed at runtime (ml_data trains on startup, rag_data ingested separately)
+RUN mkdir -p qdrant_data ml_data rag_data/crop_guides rag_data/pest_control
 
 # HuggingFace models cache inside container (disease model auto-downloads)
 ENV HF_HOME=/app/.cache/huggingface
