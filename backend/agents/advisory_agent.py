@@ -1,3 +1,4 @@
+import asyncio
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 from backend.agents.state import AgentState
@@ -14,13 +15,17 @@ def _build_rag_query(state: AgentState) -> str:
     crops = state.get("farm_state", {}).get("primary_crops", ["tomato", "brinjal"])
     condition = state["weather_forecast"].get("Condition", "")
     humidity = state["weather_forecast"].get("Humidity", 60)
-    extra = "fungal disease" if float(humidity) > 80 else "pest management"
+    try:
+        extra = "fungal disease" if float(humidity) > 80 else "pest management"
+    except (TypeError, ValueError):
+        extra = "pest management"
     return f"cultivation guide {' '.join(crops)} {condition} {extra} Northeast India organic farming"
 
 
 async def run(state: AgentState) -> AgentState:
     query = _build_rag_query(state)
-    context_chunks = retrieve_context(query, top_k=5)
+    # retrieve_context is sync (CPU + network) — run in thread to avoid blocking event loop
+    context_chunks = await asyncio.to_thread(retrieve_context, query, 5)
 
     crops = state.get("farm_state", {}).get("primary_crops", ["tomato", "brinjal"])
     weather_summary = (

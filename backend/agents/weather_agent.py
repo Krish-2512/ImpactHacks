@@ -1,5 +1,4 @@
 import re
-import time
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 from backend.agents.state import AgentState
@@ -31,7 +30,6 @@ def _extract_list(text: str, keyword: str) -> list[str]:
 
 
 async def run(state: AgentState) -> AgentState:
-    start = time.time()
     w = state["weather_forecast"]
     crops = state.get("farm_state", {}).get("primary_crops", ["tomato", "brinjal", "cabbage"])
 
@@ -42,11 +40,17 @@ async def run(state: AgentState) -> AgentState:
         max_tokens=800,
     )
 
+    def _f(v, fallback=0.0):
+        try:
+            return f"{float(v):.1f}"
+        except (TypeError, ValueError):
+            return str(fallback)
+
     user_msg = f"""Weather forecast for today (Northeast India):
-- Temperature: {w.get('Temperature', 'N/A'):.1f}°C
-- Humidity: {w.get('Humidity', 'N/A'):.1f}%
-- Wind Speed: {w.get('Wind_Speed', 'N/A'):.1f} km/h
-- Precipitation: {w.get('Precipitation', 'N/A'):.1f} mm
+- Temperature: {_f(w.get('Temperature'))}°C
+- Humidity: {_f(w.get('Humidity'))}%
+- Wind Speed: {_f(w.get('Wind_Speed'))} km/h
+- Precipitation: {_f(w.get('Precipitation'))} mm
 - Condition: {w.get('Condition', 'N/A')}
 
 Farmer's crops: {', '.join(crops)}

@@ -106,12 +106,17 @@ async def run_cycle(
 
 @router.get("/latest-report")
 async def latest_report(current_user: dict = Depends(get_current_user), db=Depends(get_db)):
+    # Try completed first, then fall back to most recent (including failed) so errors are visible
     cycle = await db["agent_cycles"].find_one(
         {"status": "completed"},
         sort=[("completed_at", -1)],
     )
     if not cycle:
-        return {"message": "No completed cycles yet. Run an agent cycle first.", "cycle": None}
+        cycle = await db["agent_cycles"].find_one(
+            {}, sort=[("started_at", -1)]
+        )
+    if not cycle:
+        return {"message": "No cycles yet. Click Run AI Analysis to start.", "cycle": None}
     cycle["_id"] = str(cycle["_id"])
     return cycle
 
