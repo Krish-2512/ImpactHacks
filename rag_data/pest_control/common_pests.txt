@@ -1,0 +1,56 @@
+Common Pests and Diseases in Northeast India Crops — Management Guide
+
+Tomato Pests and Diseases
+
+Tomato Late Blight (Phytophthora infestans)
+Symptoms: Water-soaked lesions on leaves turning brown-black with white mold on underside. Fruit shows brown rotting patches. Spreads rapidly in cool humid weather 15–20°C.
+Management: Apply Metalaxyl + Mancozeb (Ridomil Gold MZ 72 WP) at 2.5g per liter. Spray at 7-day intervals during monsoon. Remove and burn infected plant material. Avoid overhead irrigation. Plant resistant varieties Arka Rakshak, Pusa Sheetal.
+
+Tomato Early Blight (Alternaria solani)
+Symptoms: Small brown circular spots with concentric rings (target board appearance) on lower leaves. Defoliation in severe cases.
+Management: Apply Mancozeb 75 WP at 2.5g per liter or Chlorothalonil 75 WP at 2g per liter at 10-day intervals.
+
+Tomato Bacterial Wilt (Ralstonia solanacearum)
+Symptoms: Sudden wilting of entire plant without yellowing. White bacterial ooze from cut stem in water. No cure once infected.
+Management: Crop rotation for 3 years with non-solanaceous crops. Use grafted plants on resistant rootstocks. Soil solarization before planting. Remove and burn infected plants immediately.
+
+Tomato Fruit Borer (Helicoverpa armigera)
+Symptoms: Circular holes on fruits with caterpillar inside. Major economic pest.
+Management: Spray Spinosad 45 SC at 0.5 ml per liter or Emamectin benzoate 5 SG at 0.4g per liter. Install pheromone traps 5 per acre for monitoring. Collect and destroy bored fruits.
+
+---
+
+Potato Diseases
+
+Potato Late Blight (Phytophthora infestans)
+Critical disease in Northeast India due to high humidity. Entire crop can be destroyed in 7–10 days under favorable conditions.
+Preventive sprays: Start Mancozeb 75 WP at 2.5g per liter 3 weeks after planting. Switch to Metalaxyl + Mancozeb at first disease appearance. Spray every 5–7 days during cool humid weather.
+
+Potato Common Scab (Streptomyces scabies)
+Symptoms: Corky rough lesions on tuber surface. Cosmetic damage reduces market value.
+Management: Maintain soil pH 5.0–5.2 (below 5.5 suppresses scab). Avoid fresh manure application near planting time. Irrigate regularly during tuber initiation.
+
+---
+
+Vegetable Pests — General
+
+Aphids (Multiple species)
+Attack: Cabbage, tomato, brinjal, chili. Feed on plant sap causing leaf curl and transmit viruses.
+Management: Spray Imidacloprid 17.8 SL at 0.5ml per liter or Thiamethoxam 25 WG at 0.3g per liter. Encourage natural predators — lacewings, ladybirds. Yellow sticky traps for monitoring.
+
+Whitefly (Bemisia tabaci)
+Transmits Tomato Yellow Leaf Curl Virus (TYLCV) — most damaging virus of tomato in Northeast India.
+Management: Spray Spiromesifen 240 SC at 1ml per liter or Buprofezin 25 SC at 2ml per liter. Reflective silver mulch repels whitefly. Remove virus-infected plants immediately.
+
+Red Spider Mite (Tetranychus urticae)
+Attack: Brinjal, tomato, chili, ginger during dry hot weather.
+Symptoms: Yellowing and bronzing of leaves, webbing on undersides.
+Management: Apply Abamectin 1.9 EC at 0.5ml per liter or Hexythiazox 5.45 EC at 1.5ml per liter. Spray undersides of leaves. Maintain humidity — mites thrive in dry conditions.
+
+---
+
+Spray Safety Guidelines
+Always wear protective clothing when spraying pesticides. Observe pre-harvest interval (PHI) — period between last spray and harvest. Rotate pesticide groups to prevent resistance. Follow state government approved pesticide list. Consult local Krishi Vigyan Kendra (KVK) before using any new pesticide. Store pesticides in original containers away from children and food.
+
+Integrated Pest Management (IPM) Principles
+1. Monitor crops twice weekly. 2. Use economic threshold levels — spray only when pest population crosses threshold. 3. Prefer biological and cultural methods. 4. Use chemical pesticides as last resort. 5. Choose selective pesticides that preserve beneficial insects.

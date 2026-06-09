@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: agrow-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+
+    # All secret values → set manually in Render dashboard (Environment tab)
+    # Never hardcode real values here — this file is committed to git
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+
+      - key: SECRET_KEY
+        sync: false
+
+      - key: GROQ_API_KEY
+        sync: false
+
+      # Qdrant Cloud (prod) — clear local path, set cloud URL + key
+      - key: QDRANT_LOCAL_PATH
+        value: ""
+
+      - key: QDRANT_URL
+        sync: false
+
+      - key: QDRANT_API_KEY
+        sync: false
+
+      # Safe to hardcode — public non-secret values
+      - key: MONGODB_DB_NAME
+        value: agrow
+
+      - key: QDRANT_COLLECTION
+        value: agrow_knowledge
+
+      - key: GROQ_MODEL_FAST
+        value: llama-3.1-8b-instant
+
+      - key: GROQ_MODEL_POWER
+        value: llama-3.3-70b-versatile
+
+      - key: WEATHER_LAT
+        value: "26.1445"
+
+      - key: WEATHER_LON
+        value: "91.7362"
+
+      - key: DISEASE_MODEL_ID
+        value: linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification
