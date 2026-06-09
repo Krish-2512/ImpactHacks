@@ -48,12 +48,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",   # Vite dev
-        "http://localhost:3000",   # CRA dev
-        "http://127.0.0.1:5173",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -83,6 +79,11 @@ async def mongo_error_handler(_request: Request, exc: PyMongoError):
         status_code=503,
         content={"detail": f"Database error: {exc}"},
     )
+
+
+@app.get("/")
+async def root():
+    return {"service": "Agrow Intelligence API v2", "docs": "/docs", "health": "/health"}
 
 
 @app.get("/health")
