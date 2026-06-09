@@ -30,22 +30,31 @@ async def recommend_crop(
     body: CropRecommendRequest,
     _user=Depends(get_current_user),
 ):
+    import asyncio
     mc = ModelCache.get()
     try:
-        recommendations = mc.crop_recommender.predict(
-            N=body.N,
-            P=body.P,
-            K=body.K,
+        kwargs = dict(
+            N=body.N, P=body.P, K=body.K,
             temperature=body.temperature,
             humidity=body.humidity,
             pH=body.pH,
             rainfall=body.rainfall,
-            top_k=3,
         )
-        importance = mc.crop_recommender.feature_importance()
+        recommendations = mc.crop_recommender.predict(**kwargs, top_k=3)
+        importance      = mc.crop_recommender.feature_importance()
+
+        # SHAP is CPU-bound (tree traversal) — run in thread pool
+        try:
+            shap_explanation = await asyncio.to_thread(
+                mc.crop_recommender.explain_prediction, **kwargs
+            )
+        except Exception as shap_err:
+            shap_explanation = {"error": str(shap_err)}
+
         return {
-            "recommendations": recommendations,
+            "recommendations":    recommendations,
             "feature_importance": importance,
+            "shap_explanation":   shap_explanation,
             "input": body.model_dump(),
             "note": "Based on ICAR agronomic parameters for Northeast India",
         }

@@ -79,6 +79,65 @@ const FEATURE_LABELS = {
   rainfall:    'Rainfall',
 }
 
+// SHAP force-plot bar: shows positive (green) and negative (red) contributions
+function ShapBar({ feature, value, maxAbs }) {
+  const pct = Math.min(100, (Math.abs(value) / maxAbs) * 100)
+  const isPositive = value >= 0
+  return (
+    <div className="flex items-center gap-3 text-xs">
+      <span className="w-24 text-right text-gray-600 shrink-0">{FEATURE_LABELS[feature] || feature}</span>
+      <div className="flex-1 flex items-center h-5 relative">
+        {/* Divider line in center */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300" />
+        {isPositive ? (
+          <div className="flex w-full">
+            <div className="w-1/2" />
+            <div
+              className="h-5 bg-green-500 rounded-r transition-all"
+              style={{ width: `${pct / 2}%` }}
+            />
+          </div>
+        ) : (
+          <div className="flex w-full justify-end">
+            <div
+              className="h-5 bg-red-400 rounded-l transition-all"
+              style={{ width: `${pct / 2}%`, marginLeft: 'auto', marginRight: '50%' }}
+            />
+          </div>
+        )}
+      </div>
+      <span className={`w-14 tabular-nums font-medium shrink-0 ${isPositive ? 'text-green-700' : 'text-red-600'}`}>
+        {isPositive ? '+' : ''}{(value * 100).toFixed(2)}%
+      </span>
+    </div>
+  )
+}
+
+function ShapExplanation({ shap }) {
+  if (!shap || shap.error) return null
+  const entries = Object.entries(shap.contributions)
+  const maxAbs = Math.max(...entries.map(([, v]) => Math.abs(v)), 0.001)
+  return (
+    <div className="agent-card">
+      <h3 className="font-semibold text-gray-800 mb-1">🔬 Why This Crop? (SHAP Explanation)</h3>
+      <p className="text-xs text-gray-400 mb-4">
+        Explainable AI — each bar shows how much a feature <span className="text-green-600 font-medium">pushed toward</span> or{' '}
+        <span className="text-red-500 font-medium">pulled away from</span>{' '}
+        <span className="font-semibold capitalize">{shap.crop}</span> (base: {(shap.base_value * 100).toFixed(1)}% avg)
+      </p>
+      <div className="space-y-2">
+        {entries.map(([feat, val]) => (
+          <ShapBar key={feat} feature={feat} value={val} maxAbs={maxAbs} />
+        ))}
+      </div>
+      <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between text-xs text-gray-500">
+        <span>Predicted probability for <span className="font-semibold capitalize">{shap.crop}</span></span>
+        <span className="font-bold text-green-700">{shap.predicted_probability}%</span>
+      </div>
+    </div>
+  )
+}
+
 export default function CropRecommenderPage() {
   const defaults = Object.fromEntries(FIELDS.map(f => [f.key, f.default]))
   const [values, setValues] = useState(defaults)
@@ -233,6 +292,9 @@ export default function CropRecommenderPage() {
                       ))}
                   </div>
                 </div>
+
+                {/* SHAP Explanation */}
+                <ShapExplanation shap={result.shap_explanation} />
 
                 <p className="text-xs text-gray-400 text-center">{result.note}</p>
               </motion.div>

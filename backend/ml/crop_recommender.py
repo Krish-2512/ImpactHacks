@@ -116,3 +116,59 @@ class CropRecommender:
         """Returns how much each soil/climate factor matters for crop selection."""
         importances = self._model.feature_importances_
         return {f: round(float(v) * 100, 1) for f, v in zip(FEATURES, importances)}
+
+    def explain_prediction(
+        self,
+        N: float, P: float, K: float,
+        temperature: float, humidity: float,
+        pH: float, rainfall: float,
+    ) -> dict:
+        """
+        SHAP explanation for the top crop recommendation.
+        Returns per-feature contributions showing WHY the model chose this crop.
+        Positive value = pushed toward this crop. Negative = pushed away.
+        """
+        import shap
+
+        x = np.array([[N, P, K, temperature, humidity, pH, rainfall]])
+        proba = self._model.predict_proba(x)[0]
+        top_idx = int(np.argmax(proba))
+        top_crop = str(self._classes[top_idx])
+
+        # Lazily build and cache the explainer (expensive first time)
+        if not hasattr(self, "_shap_explainer") or self._shap_explainer is None:
+            self._shap_explainer = shap.TreeExplainer(self._model)
+
+        raw = self._shap_explainer.shap_values(x)
+
+        # Handle both SHAP output formats:
+        # - list of arrays (older SHAP): raw[class_idx] → shape (1, n_features)
+        # - 3-D array (newer SHAP):      raw → shape (1, n_features, n_classes)
+        if isinstance(raw, list):
+            class_shap = np.array(raw[top_idx][0])
+        else:
+            arr = np.array(raw)
+            if arr.ndim == 3:
+                class_shap = arr[0, :, top_idx]
+            else:
+                class_shap = arr[0]
+
+        contributions = {
+            feat: round(float(val), 4)
+            for feat, val in zip(FEATURES, class_shap)
+        }
+        # Sort by absolute magnitude so biggest drivers appear first
+        contributions = dict(
+            sorted(contributions.items(), key=lambda kv: abs(kv[1]), reverse=True)
+        )
+
+        # Base value: average model output across training data for this class
+        ev = self._shap_explainer.expected_value
+        base = float(ev[top_idx]) if hasattr(ev, "__len__") else float(ev)
+
+        return {
+            "crop": top_crop,
+            "contributions": contributions,
+            "base_value": round(base, 4),
+            "predicted_probability": round(float(proba[top_idx]) * 100, 1),
+        }
