@@ -30,7 +30,8 @@ export default function DiseasePage() {
       const data = await detectDisease(file)
       setResult(data.result)
     } catch (err) {
-      setError(err.response?.data?.detail || t('common.error'))
+      const detail = err.response?.data?.detail
+      setError(detail || `Detection failed (${err.message || 'network error'}). The model may be loading — wait 30 seconds and try again.`)
     } finally {
       setLoading(false)
     }
@@ -71,6 +72,7 @@ export default function DiseasePage() {
             <span className="animate-spin text-2xl">⚙️</span>
             <span>{t('disease.analyzing')}</span>
           </div>
+          <p className="text-xs text-gray-400 mt-2">First detection loads the AI model (~20–40 sec)</p>
         </div>
       )}
 

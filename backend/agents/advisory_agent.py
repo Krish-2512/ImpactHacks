@@ -25,7 +25,11 @@ def _build_rag_query(state: AgentState) -> str:
 async def run(state: AgentState) -> AgentState:
     query = _build_rag_query(state)
     # retrieve_context is sync (CPU + network) — run in thread to avoid blocking event loop
-    context_chunks = await asyncio.to_thread(retrieve_context, query, 5)
+    try:
+        context_chunks = await asyncio.to_thread(retrieve_context, query, 5)
+    except Exception as e:
+        print(f"[advisory_agent] RAG retrieval failed (continuing without context): {e}")
+        context_chunks = []
 
     crops = state.get("farm_state", {}).get("primary_crops", ["tomato", "brinjal"])
     weather_summary = (
