@@ -10,45 +10,103 @@ import io
 from backend.config import settings
 
 TREATMENT_MAP = {
-    "Apple___Apple_scab": "Apply fungicide (captan or mancozeb) during wet spring. Remove fallen leaves.",
-    "Apple___Black_rot": "Prune infected branches 8 inches below lesions. Apply copper fungicide.",
-    "Apple___Cedar_apple_rust": "Apply myclobutanil fungicide. Remove nearby juniper trees if possible.",
-    "Apple___healthy": "Plant appears healthy. Continue regular care.",
+    # ── Apple ────────────────────────────────────────────────────────────────
+    "Apple___Apple_scab": "Apply fungicide (captan or mancozeb) during wet spring. Remove and destroy fallen leaves.",
+    "Apple___Black_rot": "Prune infected branches 8 inches below lesions. Apply copper fungicide after pruning.",
+    "Apple___Cedar_apple_rust": "Apply myclobutanil fungicide at pink bud stage. Remove nearby juniper trees if possible.",
+    "Apple___healthy": "Plant appears healthy. Continue regular monitoring.",
+    # ── Blueberry / Cherry / Raspberry / Strawberry ───────────────────────
     "Blueberry___healthy": "Plant appears healthy.",
-    "Cherry_(including_sour)___Powdery_mildew": "Apply sulfur or potassium bicarbonate spray. Improve air circulation.",
+    "Cherry_(including_sour)___Powdery_mildew": "Apply sulfur or potassium bicarbonate spray. Prune for better air circulation.",
     "Cherry_(including_sour)___healthy": "Plant appears healthy.",
-    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": "Apply strobilurin fungicide. Practice crop rotation.",
-    "Corn_(maize)___Common_rust_": "Apply propiconazole fungicide. Plant resistant varieties next season.",
-    "Corn_(maize)___Northern_Leaf_Blight": "Apply azoxystrobin fungicide at early tasseling. Use resistant hybrids.",
-    "Corn_(maize)___healthy": "Plant appears healthy.",
-    "Grape___Black_rot": "Remove mummified fruit. Apply mancozeb fungicide before and during wet weather.",
-    "Grape___Esca_(Black_Measles)": "Prune infected wood. No chemical cure — remove severely affected vines.",
-    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": "Apply copper-based fungicide. Improve canopy ventilation.",
-    "Grape___healthy": "Plant appears healthy.",
-    "Orange___Haunglongbing_(Citrus_greening)": "Remove infected trees. Control Asian citrus psyllid vector with insecticide.",
-    "Peach___Bacterial_spot": "Apply copper hydroxide spray. Avoid overhead irrigation.",
-    "Peach___healthy": "Plant appears healthy.",
-    "Pepper,_bell___Bacterial_spot": "Apply copper-based bactericide. Rotate crops. Avoid working in wet fields.",
-    "Pepper,_bell___healthy": "Plant appears healthy.",
-    "Potato___Early_blight": "Apply chlorothalonil or mancozeb. Ensure proper spacing for air circulation.",
-    "Potato___Late_blight": "URGENT: Apply metalaxyl fungicide immediately. Destroy infected plants. Do not compost.",
-    "Potato___healthy": "Plant appears healthy.",
     "Raspberry___healthy": "Plant appears healthy.",
-    "Soybean___healthy": "Plant appears healthy.",
-    "Squash___Powdery_mildew": "Apply neem oil or sulfur spray weekly. Water at base, not overhead.",
-    "Strawberry___Leaf_scorch": "Remove infected leaves. Apply captan fungicide. Avoid wet foliage.",
+    "Strawberry___Leaf_scorch": "Remove infected leaves immediately. Apply captan fungicide. Avoid wetting foliage.",
     "Strawberry___healthy": "Plant appears healthy.",
-    "Tomato___Bacterial_spot": "Apply copper-based bactericide. Avoid overhead watering. Remove infected leaves.",
-    "Tomato___Early_blight": "Apply mancozeb or chlorothalonil every 7-10 days. Mulch around base.",
-    "Tomato___Late_blight": "URGENT: Apply metalaxyl or cymoxanil immediately. Destroy infected tissue.",
-    "Tomato___Leaf_Mold": "Improve greenhouse ventilation. Apply chlorothalonil fungicide.",
+    # ── Corn / Soybean / Squash ───────────────────────────────────────────
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": "Apply strobilurin fungicide. Practice crop rotation with non-host crops.",
+    "Corn_(maize)___Common_rust_": "Apply propiconazole fungicide at early infection. Plant resistant varieties next season.",
+    "Corn_(maize)___Northern_Leaf_Blight": "Apply azoxystrobin at early tasseling. Use resistant hybrids.",
+    "Corn_(maize)___healthy": "Plant appears healthy.",
+    "Soybean___healthy": "Plant appears healthy.",
+    "Squash___Powdery_mildew": "Apply neem oil or sulfur spray weekly. Water at base, avoid overhead irrigation.",
+    # ── Grape ─────────────────────────────────────────────────────────────
+    "Grape___Black_rot": "Remove mummified fruit. Apply mancozeb fungicide before and during wet weather.",
+    "Grape___Esca_(Black_Measles)": "Prune infected wood during dry weather. Remove severely affected vines.",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": "Apply copper-based fungicide. Improve canopy ventilation by leaf removal.",
+    "Grape___healthy": "Plant appears healthy.",
+    # ── Orange / Citrus ───────────────────────────────────────────────────
+    "Orange___Haunglongbing_(Citrus_greening)": "URGENT: Remove and destroy infected trees. Control Asian citrus psyllid with imidacloprid.",
+    # ── Peach / Pepper ───────────────────────────────────────────────────
+    "Peach___Bacterial_spot": "Apply copper hydroxide spray every 10–14 days. Avoid overhead irrigation.",
+    "Peach___healthy": "Plant appears healthy.",
+    "Pepper,_bell___Bacterial_spot": "Apply copper-based bactericide. Rotate crops for 2+ years. Avoid working in wet fields.",
+    "Pepper,_bell___healthy": "Plant appears healthy.",
+    # ── Potato ───────────────────────────────────────────────────────────
+    "Potato___Early_blight": "Apply chlorothalonil or mancozeb every 7 days. Ensure proper spacing for air circulation.",
+    "Potato___Late_blight": "URGENT: Apply metalaxyl or dimethomorph immediately. Destroy infected plants — do not compost.",
+    "Potato___healthy": "Plant appears healthy.",
+    # ── Tomato ───────────────────────────────────────────────────────────
+    "Tomato___Bacterial_spot": "Apply copper-based bactericide. Remove infected leaves. Avoid overhead watering.",
+    "Tomato___Early_blight": "Apply mancozeb or chlorothalonil every 7–10 days. Mulch around base to prevent soil splash.",
+    "Tomato___Late_blight": "URGENT: Apply metalaxyl or cymoxanil immediately. Remove and burn infected tissue.",
+    "Tomato___Leaf_Mold": "Improve ventilation. Reduce humidity below 85%. Apply chlorothalonil fungicide.",
     "Tomato___Septoria_leaf_spot": "Remove lower infected leaves. Apply mancozeb. Avoid wetting foliage.",
-    "Tomato___Spider_mites Two-spotted_spider_mite": "Apply neem oil or abamectin. Spray undersides of leaves. Increase humidity.",
+    "Tomato___Spider_mites Two-spotted_spider_mite": "Apply neem oil or abamectin. Spray undersides of leaves thoroughly. Increase ambient humidity.",
     "Tomato___Target_Spot": "Apply azoxystrobin or pyraclostrobin fungicide. Improve air circulation.",
-    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": "Remove infected plants immediately. Control whitefly vectors with imidacloprid.",
-    "Tomato___Tomato_mosaic_virus": "Remove infected plants. Disinfect tools. Plant resistant varieties.",
-    "Tomato___healthy": "Plant appears healthy. Continue regular care and monitoring.",
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": "URGENT: Remove infected plants immediately. Control whitefly with imidacloprid or yellow sticky traps.",
+    "Tomato___Tomato_mosaic_virus": "Remove infected plants. Disinfect tools with 10% bleach. Plant certified disease-free seeds.",
+    "Tomato___healthy": "Plant appears healthy. Continue regular monitoring.",
 }
+
+# Disease-type keyword → generic treatment guidance
+_DISEASE_KEYWORD_ADVICE = {
+    "late_blight":       ("URGENT: Apply metalaxyl or cymoxanil fungicide immediately. Remove and destroy infected tissue. Do not compost.", "urgent"),
+    "early_blight":      ("Apply mancozeb or chlorothalonil every 7–10 days. Remove lower infected leaves. Mulch around base.", "moderate"),
+    "blight":            ("Apply copper-based or mancozeb fungicide. Remove infected plant parts immediately. Improve air circulation.", "moderate"),
+    "powdery_mildew":    ("Apply sulfur-based or potassium bicarbonate spray. Improve air circulation. Avoid overhead watering.", "moderate"),
+    "downy_mildew":      ("Apply fosetyl-aluminium or mancozeb. Remove infected leaves. Reduce leaf wetness duration.", "moderate"),
+    "rust":              ("Apply propiconazole or tebuconazole fungicide. Remove and destroy infected leaves. Avoid excessive nitrogen.", "moderate"),
+    "leaf_spot":         ("Apply chlorothalonil or mancozeb every 10–14 days. Remove infected leaves. Avoid wetting foliage.", "moderate"),
+    "bacterial_spot":    ("Apply copper-based bactericide. Avoid overhead irrigation. Rotate crops for 2 years.", "moderate"),
+    "bacterial_wilt":    ("Remove and destroy wilted plants. Disinfect tools. Control cucumber beetle vectors. Practice 3-year crop rotation.", "urgent"),
+    "mosaic_virus":      ("Remove and destroy infected plants. Control aphid vectors with neem oil or imidacloprid. Disinfect all tools.", "urgent"),
+    "yellow_curl_virus": ("Remove infected plants. Control whitefly with imidacloprid or yellow sticky traps.", "urgent"),
+    "black_rot":         ("Apply copper fungicide. Remove infected plant material. Improve drainage and air circulation.", "moderate"),
+    "leaf_mold":         ("Improve ventilation and reduce humidity. Apply chlorothalonil or copper fungicide.", "moderate"),
+    "anthracnose":       ("Apply mancozeb or carbendazim fungicide. Avoid overhead irrigation. Remove infected fruit and leaves.", "moderate"),
+    "cercospora":        ("Apply strobilurin or mancozeb fungicide. Practice crop rotation. Remove crop debris after harvest.", "moderate"),
+    "scab":              ("Apply captan or myclobutanil fungicide at early symptom stage. Remove fallen infected leaves.", "moderate"),
+    "canker":            ("Prune and destroy infected branches. Apply copper paste on cut surfaces. Avoid wounds during wet weather.", "moderate"),
+    "wilt":              ("Remove infected plants. Improve soil drainage. Solarise soil between seasons. Avoid water-logging.", "moderate"),
+    "spider_mite":       ("Apply neem oil or abamectin. Spray leaf undersides. Increase humidity. Remove heavily infested leaves.", "moderate"),
+    "aphid":             ("Apply neem oil or imidacloprid spray. Use yellow sticky traps. Encourage natural predators.", "moderate"),
+    "shoot_borer":       ("Apply chlorpyrifos or spinosad. Remove and destroy infested shoots weekly. Use pheromone traps.", "urgent"),
+    "fruit_borer":       ("Apply spinosad or emamectin benzoate. Install pheromone traps. Remove infested fruit immediately.", "urgent"),
+    "greening":          ("URGENT: Remove and destroy infected trees. Control psyllid vector with imidacloprid. Plant certified disease-free nursery stock.", "urgent"),
+}
+
+
+def _smart_fallback(label: str, crop: str, disease: str) -> tuple[str, str]:
+    """Return (treatment_text, severity) for labels not in TREATMENT_MAP."""
+    label_lower = label.lower().replace(" ", "_")
+    disease_lower = disease.lower().replace(" ", "_")
+
+    for keyword, (advice, severity) in _DISEASE_KEYWORD_ADVICE.items():
+        if keyword in label_lower or keyword in disease_lower:
+            return (
+                f"{advice} (Detected: {disease} on {crop}. "
+                f"For region-specific guidance contact your local KVK.)",
+                severity,
+            )
+
+    # Last resort — at least name the disease
+    return (
+        f"Disease identified: {disease} on {crop}. "
+        "Apply broad-spectrum fungicide/bactericide as a precaution. "
+        "Isolate affected plants and consult your local Krishi Vigyan Kendra (KVK) "
+        "or call the Kisan Call Centre: 1800-180-1551 (toll-free).",
+        "moderate",
+    )
 
 _model = None
 _labels = None
@@ -144,7 +202,15 @@ def predict(image_bytes: bytes) -> dict:
     crop    = parts[0].replace("_", " ") if parts else "Unknown"
     disease = parts[1].replace("_", " ") if len(parts) > 1 else label
     is_healthy = "healthy" in label.lower()
-    treatment  = TREATMENT_MAP.get(label, "Consult your local Krishi Vigyan Kendra (KVK) for expert advice.")
+
+    if is_healthy:
+        treatment = f"{crop} plant appears healthy. Continue regular monitoring and care."
+        severity  = "none"
+    elif label in TREATMENT_MAP:
+        treatment = TREATMENT_MAP[label]
+        severity  = "urgent" if "URGENT" in treatment else "moderate"
+    else:
+        treatment, severity = _smart_fallback(label, crop, disease)
 
     return {
         "label":       label,
@@ -153,6 +219,6 @@ def predict(image_bytes: bytes) -> dict:
         "is_healthy":  is_healthy,
         "confidence":  confidence,
         "treatment":   treatment,
-        "severity":    "none" if is_healthy else ("urgent" if "URGENT" in treatment else "moderate"),
+        "severity":    severity,
         "all_predictions": results,
     }

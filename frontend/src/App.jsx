@@ -19,6 +19,7 @@ import NotificationsPage    from './pages/NotificationsPage'
 import ProfilePage          from './pages/ProfilePage'
 import CropRecommenderPage  from './pages/CropRecommenderPage'
 import IrrigationPage       from './pages/IrrigationPage'
+import TraceViewPage        from './pages/TraceViewPage'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 5 * 60 * 1000, retry: 1 } },
@@ -51,6 +52,7 @@ export default function App() {
               <Route path="/profile"     element={<Protected><ProfilePage /></Protected>} />
               <Route path="/recommend"   element={<Protected><CropRecommenderPage /></Protected>} />
               <Route path="/irrigation"  element={<Protected><IrrigationPage /></Protected>} />
+              <Route path="/trace/:cycleId" element={<Protected><TraceViewPage /></Protected>} />
               <Route path="*"            element={<Navigate to="/" replace />} />
             </Routes>
           </div>

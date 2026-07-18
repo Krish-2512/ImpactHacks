@@ -3,7 +3,11 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    # MongoDB
+    # SQL database (user storage) — SQLite by default, PostgreSQL for production
+    # For PostgreSQL: DATABASE_URL=postgresql+asyncpg://user:pass@host:5432/agrow
+    DATABASE_URL: str = "sqlite+aiosqlite:///./agrow_users.db"
+
+    # MongoDB (agent cycles, memory, notifications, marketplace)
     MONGODB_URI: str = "mongodb://localhost:27017"
     MONGODB_DB_NAME: str = "agrow"
 
@@ -35,6 +39,22 @@ class Settings(BaseSettings):
     # Default: Guwahati, Assam — change in .env for other locations
     WEATHER_LAT: float = 26.1445
     WEATHER_LON: float = 91.7362
+
+    # Set to true to fetch real-time weather from Open-Meteo instead of SARIMAX/seasonal model
+    USE_LIVE_WEATHER: bool = False
+
+    # Rate limiting — requests per minute per IP (0 = disabled)
+    RATE_LIMIT_RPM: int = 60
+
+    # Email notifications via SMTP
+    # Gmail: smtp.gmail.com:587 + an App Password (Google Account → Security → App passwords)
+    EMAIL_NOTIFICATIONS_ENABLED: bool = False
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""          # your Gmail address
+    SMTP_PASSWORD: str = ""      # 16-char App Password (NOT your login password)
+    SMTP_FROM: str = ""          # display name/address, defaults to SMTP_USER if blank
+    EMAIL_MIN_PRIORITY: str = "high"  # send emails for "high" and "urgent" only
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 

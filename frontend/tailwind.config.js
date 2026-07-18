@@ -25,8 +25,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        devanagari: ["Noto Sans Devanagari", "sans-serif"],
+        sans:    ["Inter", "system-ui", "sans-serif"],
+        display: ["'Plus Jakarta Sans'", "Inter", "system-ui", "sans-serif"],
+        devanagari: ["'Noto Sans Devanagari'", "sans-serif"],
       },
     },
   },

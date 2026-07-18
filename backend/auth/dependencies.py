@@ -1,14 +1,17 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from backend.auth.service import decode_token
-from backend.database.mongodb import get_db
+from backend.database.sql import get_sql_db
+from backend.database.sql_models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 async def get_current_user(
     token: str = Depends(oauth2_scheme),
-    db=Depends(get_db),
+    db: AsyncSession = Depends(get_sql_db),
 ) -> dict:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -23,13 +26,12 @@ async def get_current_user(
     if not user_id:
         raise credentials_exception
 
-    from bson import ObjectId
-    user = await db["users"].find_one({"_id": ObjectId(user_id)})
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
     if not user:
         raise credentials_exception
 
-    user["_id"] = str(user["_id"])
-    return user
+    return user.to_dict()
 
 
 async def require_farmer(current_user: dict = Depends(get_current_user)) -> dict:
