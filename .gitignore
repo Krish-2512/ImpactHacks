@@ -1,0 +1,45 @@
+# ── Secrets — NEVER commit these ─────────────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# ── ML data — pkl files regenerate via load_or_train() on startup ─────────────
+ml_data/
+translations_cache.json
+
+# ── Runtime data ──────────────────────────────────────────────────────────────
+qdrant_data/
+.cache/
+*.cache
+
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

@@ -2,13 +2,14 @@ import pandas as pd
 import numpy as np
 import os
 import joblib
+from pathlib import Path
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from datetime import datetime
 import json
 
-# Define the base directory to store models
-BASE_DIR = os.path.join(os.getcwd(), "crop_models")
-os.makedirs(BASE_DIR, exist_ok=True)  # Ensure the directory exists
+_MODULE_DIR = Path(__file__).parent
+BASE_DIR = str(_MODULE_DIR / "crop_models")
+os.makedirs(BASE_DIR, exist_ok=True)
 
 def train_and_save_models(file_paths, model_dir=BASE_DIR):
     """
@@ -88,24 +89,24 @@ def load_models_and_forecast2(target_date, model_dir=BASE_DIR):
 
     return predictions
 
-# Define file paths for each crop
 file_paths = {
-    "brinjal": r"C:\Users\HP\Desktop\AgroApp\AgroApp\Models\CropPricePrediction\brinjal.csv",
-    "cabbage": r"C:\Users\HP\Desktop\AgroApp\AgroApp\Models\CropPricePrediction\cabbage.csv",
-    "lemon": r"C:\Users\HP\Desktop\AgroApp\AgroApp\Models\CropPricePrediction\lemon.csv",
-    "tomato": r"C:\Users\HP\Desktop\AgroApp\AgroApp\Models\CropPricePrediction\tomato.csv"
+    "brinjal": str(_MODULE_DIR / "brinjal.csv"),
+    "cabbage": str(_MODULE_DIR / "cabbage.csv"),
+    "lemon":   str(_MODULE_DIR / "lemon.csv"),
+    "tomato":  str(_MODULE_DIR / "tomato.csv"),
 }
 
-# Train models for all crops
-# train_and_save_models(file_paths)
+if __name__ == "__main__":
+    # Train models for all crops
+    train_and_save_models(file_paths)
 
-# Forecast prices for today
-target_date = datetime.today().strftime('%d-%m-%Y')
-predicted_prices = load_models_and_forecast2(target_date)
+    # Forecast prices for today and save to JSON
+    target_date = datetime.today().strftime('%d-%m-%Y')
+    predicted_prices = load_models_and_forecast2(target_date)
 
-# Save predictions to JSON
-json_path = os.path.join(BASE_DIR, "predicted_prices.json")
-with open(json_path, "w") as json_file:
-    json.dump(predicted_prices, json_file, indent=4)
+    json_path = os.path.join(BASE_DIR, "predicted_prices.json")
+    with open(json_path, "w") as json_file:
+        json.dump(predicted_prices, json_file, indent=4)
+    print("Saved predicted_prices.json")
 
 

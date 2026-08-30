@@ -1,32 +1,18 @@
-from django.shortcuts import render
-from .forms import  UserRegistrationForm, ProductForm
-from .models import Product , Sale, Notification
-from django.shortcuts import get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import UserRegistrationForm, ProductForm
+from .models import Product, Sale, Notification
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.contrib.auth import get_user_model
-
-
-
-import json
-import os
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from Models.WeatherPrediction.weatherModel    import load_models_and_forecast, predict_weather_condition
-# model = load_models_and_forecast(target_date="2025-03-08")
+from Models.WeatherPrediction.weatherModel import load_models_and_forecast, predict_weather_condition
 from Models.CropPricePrediction.cropModel import load_models_and_forecast2
 from datetime import datetime
+import json
+import os
 
-# Get current date in "DD-MM-YYYY" format
-target_date = datetime.today().strftime('%d-%m-%Y')
-
-# Load models and get predictions for the current date
-model2 = load_models_and_forecast2(target_date)
-
-model = load_models_and_forecast(target_date)
+User = get_user_model()
 
 # def weather_prediction_view(request):
 #     if request.method == "GET":
@@ -62,16 +48,14 @@ model = load_models_and_forecast(target_date)
 def weather_prediction_view(request):
     if request.method == "POST":
         try:
-            # Get forecast data from the model
-            forecast = model  # Assuming `model` contains the forecast dictionary
+            today = datetime.today().strftime('%Y-%m-%d')
+            forecast = load_models_and_forecast(today)
 
-            # Extract values correctly
-            temperature = forecast.get('Temperature', 0)  # Provide a default value if missing
+            temperature = forecast.get('Temperature', 0)
             humidity = forecast.get('Humidity', 0)
             wind_speed = forecast.get('Wind_Speed', 0)
             precipitation = forecast.get('Precipitation', 0)
 
-            # Pass all required arguments to `predict_weather_condition`
             condition = predict_weather_condition(temperature, humidity, wind_speed, precipitation)
 
             # return JsonResponse({"prediction": condition })  # Return prediction
@@ -462,55 +446,19 @@ def purchase_product(request, product_id):
         })
 
     return render(request, "customer/purchase_product.html", {"product": product})
+
+
 @login_required
 def delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     notification.delete()
     return JsonResponse({'success': True})
 
-
-
-# @login_required
-def purchase_product(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-
-    if request.method == "POST":
-        quantity = int(request.POST.get("quantity", 0))
-
-        if quantity <= 0:
-            return render(request, "customer/purchase_product.html", {
-                "product": product,
-                "error": "Invalid quantity selected."
-            })
-
-        if quantity > product.quantity:
-            return render(request, "customer/purchase_product.html", {
-                "product": product,
-                "error": "Not enough stock available."
-            })
-
-        # Calculate total cost
-        total_cost = product.price * quantity
-
-        # Deduct quantity from stock
-        product.quantity -= quantity
-        product.save()
-
-        # Record the sale
-        Sale.objects.create(product=product, quantity_sold=quantity, total_cost=total_cost)
-
-        # Redirect to transactions page
-
-
-    return render(request, "customer/purchase_product.html", {"product": product})
-
 def transaction_history(request):
     sales = Sale.objects.filter(product__user=request.user).order_by("-sold_at")
     purchases = Sale.objects.filter(product__in=Product.objects.filter(user=request.user)).order_by("-sold_at")
 
     return render(request, "customer/transaction_history.html", {"sales": sales, "purchases": purchases})
-
-    return render(request, "customer/transaction_history.html", {"sales": sales})
 
 @login_required
 def generate_notifications():

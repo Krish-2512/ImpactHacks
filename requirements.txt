@@ -1,0 +1,54 @@
+# FastAPI server
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12
+
+# SQL database — user storage (SQLite dev / PostgreSQL prod)
+sqlalchemy>=2.0.0
+aiosqlite>=0.19.0          # SQLite async driver (dev default)
+# asyncpg>=0.29.0          # uncomment for PostgreSQL
+
+# MongoDB — agent cycles, memory, notifications, marketplace
+motor>=3.6.0
+pymongo>=4.9.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+bcrypt>=4.0.1
+pydantic[email]>=2.9.0
+pydantic-settings>=2.6.0
+
+# LangChain + Groq + LangGraph (1.x compatible)
+langchain>=0.3.0
+langchain-groq>=0.2.0
+langchain-core>=0.3.0
+langchain-text-splitters>=0.3.0
+langgraph>=0.2.50
+
+# RAG — core
+fastembed>=0.5.0
+qdrant-client>=1.12.0
+pypdf>=5.0.0
+
+# RAG — enhancements
+rank-bm25>=0.2.2
+
+# ML models
+pandas>=2.2.3
+numpy>=1.26.4
+joblib>=1.4.2
+statsmodels>=0.14.4
+scikit-learn>=1.5.0
+xgboost>=2.1.4
+shap>=0.46.0
+
+# Computer Vision — plant disease detection
+transformers>=4.46.0
+torch>=2.5.0
+Pillow>=10.4.0
+
+# HTTP client
+httpx>=0.27.0
+
+# Rate limiting
+slowapi>=0.1.9

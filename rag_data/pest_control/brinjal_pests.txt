@@ -1,0 +1,99 @@
+Brinjal Pest and Disease Management — Northeast India
+
+Brinjal Shoot and Fruit Borer (Leucinodes orbonalis)
+The single most damaging pest of brinjal in Assam and all of Northeast India. Can cause up to 70–80% yield loss if unmanaged.
+
+Symptoms:
+- Young larvae bore into tender shoots causing wilting and drooping of shoot tips (dead heart)
+- Larvae enter fruits leaving small entry holes; fruit shows premature ripening and rotting
+- Infested fruits unsaleable
+
+Life Cycle:
+- Active year-round in Assam; peak infestation June–October (monsoon season)
+- Moth lays eggs on undersides of leaves; larvae bore in within 2–3 days
+
+Management (Integrated approach):
+1. Remove and destroy wilted shoots (dead hearts) weekly — critical cultural practice
+2. Install pheromone traps: 5 traps per acre for monitoring; replace lure every 4–6 weeks
+3. Spray Chlorantraniliprole 18.5 SC at 0.5 ml per liter — most effective
+4. Alternatively: Spinosad 45 SC at 0.5 ml per liter every 10–14 days
+5. Emamectin benzoate 5 SG at 0.4g per liter — good systemic action
+6. Do not spray same chemical continuously — rotate chemical groups
+7. Harvest frequently (every 3–4 days) to remove infested fruits before larvae emerge
+8. Pre-harvest interval: Chlorantraniliprole 3 days; Spinosad 1 day; Emamectin 3 days
+9. Biological control: Bacillus thuringiensis (Bt) spray at larval emergence effective in low-pressure situations
+10. Barrier crop: Plant marigold rows around brinjal fields to attract adult moths
+
+Brinjal Jassid/Leafhopper (Amrasca biguttula)
+Common in dry hot weather conditions — May to July.
+Symptoms: Leaf curl, yellowing, stunting; "hopper burn" on leaf margins
+Management: Spray Imidacloprid 17.8 SL at 0.5 ml/liter or Thiamethoxam 25 WG at 0.2g/liter
+
+Aphids (Aphis gossypii)
+Attack young shoots and underside of leaves; transmit viruses.
+Management: Dimethoate 30 EC at 2 ml/liter; Encourage natural enemies (ladybird beetles)
+
+Red Spider Mite (Tetranychus urticae)
+Severe in dry hot periods (March–May) and during dry breaks in monsoon.
+Symptoms: Yellowing and bronzing; fine webbing on leaf undersides
+Management: Abamectin 1.9 EC at 0.5 ml/liter; Maintain moisture; Sulphur dust in early stages
+
+Whitefly (Bemisia tabaci)
+Transmits brinjal yellow mosaic virus (major concern).
+Management: Yellow sticky traps; Spiromesifen 240 SC at 1 ml/liter; Silver mulch repels
+
+---
+
+Brinjal Diseases in Assam
+
+Phomopsis Blight / Fruit Rot (Phomopsis vexans)
+Most common disease of brinjal in Assam — favored by warm humid conditions.
+Symptoms: Brown circular spots on leaves; sunken dark spots on fruits; seedling damping-off
+Management:
+- Seed treatment: Thiram 3g per kg seed before sowing
+- Spray Mancozeb 75 WP at 2.5g/liter at 10-day intervals
+- Copper oxychloride 3g/liter as protectant spray during monsoon
+- Remove and destroy infected fruits immediately
+
+Bacterial Wilt (Ralstonia solanacearum)
+Serious problem in Assam, especially in warm wet conditions.
+Symptoms: Sudden wilting of entire plant; no yellowing; white bacterial ooze from cut stem in water
+No cure once infected.
+Management:
+- Crop rotation: avoid brinjal or other solanaceous crops for 3 years in affected field
+- Soil solarization: cover moist soil with clear polythene for 6–8 weeks in summer
+- Remove and burn infected plants immediately — do not compost
+- Grafting: graft brinjal onto Solanum torvum (wild brinjal) rootstock — highly resistant
+- Trichoderma viride soil application at transplanting as biocontrol
+
+Little Leaf Disease (Phytoplasma)
+Important viral disease in Assam.
+Symptoms: Small pale yellow leaves; multiple shoots from axillary buds; stunted plants; no fruit
+Transmitted by leafhoppers.
+Management:
+- Remove and destroy infected plants immediately
+- Control leafhopper vector with Imidacloprid 0.5 ml/liter
+- No cure for infected plants
+- Use resistant varieties: Pusa Purple Cluster, Muktakeshi
+
+Cercospora Leaf Spot
+Symptoms: Circular pale brown spots with dark margins on leaves
+Management: Mancozeb 75 WP at 2.5g/liter or Carbendazim 1g/liter spray at 14-day intervals
+
+Damping Off (nursery)
+Rhizoctonia and Pythium cause seed and seedling rot in nurseries.
+Management: Drench nursery bed with Metalaxyl + Mancozeb 2.5g/liter before sowing; Trichoderma viride application
+
+---
+
+Spray Schedule for Brinjal in Assam (Monsoon Season Kharif Crop)
+
+Week 1 after transplanting: Chlorpyrifos 2 ml/liter (soil pest and cutworm)
+Week 3: Mancozeb 2.5g/liter (fungal disease preventive)
+Week 5: Spinosad 0.5 ml/liter (shoot borer)
+Week 7: Copper oxychloride 3g/liter (bacterial + fungal diseases)
+Week 9: Chlorantraniliprole 0.5 ml/liter (fruit borer)
+Week 11: Abamectin 0.5 ml/liter (mites + fruit borer)
+Continue rotating chemicals at 10–14 day intervals throughout harvest season.
+
+Note: Always observe pre-harvest interval (PHI). Wash fruits thoroughly before consumption.
